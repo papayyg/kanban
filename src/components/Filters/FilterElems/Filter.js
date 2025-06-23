@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-const Filter = ({ id, title, selectedLabel, options, isOpen, setOpenFilter, multiple, search }) => {
+const Filter = ({ id, title, selectedLabel, options, isOpen, setOpenFilter, multiple, search, loader }) => {
   const [labels, setLabels] = useState();
   const [values, setValues] = useState();
   const [trueVal, setTrueVal] = useState(false);
@@ -34,7 +34,6 @@ const Filter = ({ id, title, selectedLabel, options, isOpen, setOpenFilter, mult
       // Single selection
       setLabels([option.label]);
       setValues([option.value]);
-      console.log(values, "single select values");
       setTrueVal(true); // Set trueVal to true to enable Apply button for single select
     }
   };
@@ -52,7 +51,6 @@ const Filter = ({ id, title, selectedLabel, options, isOpen, setOpenFilter, mult
     const target = e.target;
     if (target.scrollHeight - target.scrollTop === target.clientHeight) {
       document.getElementById("scrollAction_filter").id = `scrollAction_filter_${title}`;
-      console.log(title)
       document.getElementById(`scrollAction_filter_${title}`).click(e);
       document.getElementById(`scrollAction_filter_${title}`).id = `scrollAction_filter`;
     }
@@ -66,6 +64,14 @@ const Filter = ({ id, title, selectedLabel, options, isOpen, setOpenFilter, mult
     setValues([]);
   };
 
+  const clearFilter = (e) => {
+    document.action_container = `{"filter_${id}": ""}`;
+    document.getElementById("action_trigger_main").click();
+    setLabels([]);
+    setValues([]);
+    return (document.action_container)
+  };
+
   const handleApply = () => {
     document.action_container = `{"filter_${id}": ${JSON.stringify(values)}}`;
     console.log(document.action_container);
@@ -74,8 +80,14 @@ const Filter = ({ id, title, selectedLabel, options, isOpen, setOpenFilter, mult
     setTrueVal(false); // Reset after applying
   };
 
-  const handleSearch = () => {
-    document.action_container = `{"search_${id}": "${searchFill}"}`;
+  const handleSearch = (searchValue) => {
+    document.action_container = `{"search_${id}": "${searchValue}"}`;
+    console.log(document.action_container);
+    document.getElementById("action_trigger_main").click();
+  };
+
+  const clearSearch = (searchValue) => {
+    document.action_container = `{"search_${id}": ""}`;
     console.log(document.action_container);
     document.getElementById("action_trigger_main").click();
   };
@@ -84,20 +96,32 @@ const Filter = ({ id, title, selectedLabel, options, isOpen, setOpenFilter, mult
     trueVal && handleApply();
   }, [labels, values]);
 
+  // Sort options so that the selected item is first (only for single select)
+  const sortedOptions = multiple 
+    ? options // If multiple, do not change the order
+    : options?.sort((a, b) => {
+        if (values?.includes(a.value)) return -1;
+        if (values?.includes(b.value)) return 1;
+        return 0;
+      });
+
   return (
     <div className="filter-container" ref={containerRef}>
-      <div className="type_btn" onClick={() => setTrueVal(true)}>
+      <div className="type_btn filter_btn" onClick={() => setTrueVal(true)}>
         <p
-          className={labels?.length ? 'selected_type bg-gray flex a-center' : 'type_btn flex a-center'}
+          className={values?.length ? 'selected_type bg-gray flex a-center' : 'type_btn flex a-center'}
           id={id}
-          onClick={toggleDropdown}
         >
-          {labels?.length ? (
-            <div style={{ padding: "12px 0 12px 16px" }}>
-              {title}: {multiple ? labels?.length > 1 ? labels?.length : labels[0] : labels}
+          {values?.length ? (
+            <div style={{ padding: "10px 0 10px 12px" }} onClick={toggleDropdown}>
+              {title}: {
+              multiple ? values?.length > 1 ? values?.length : labels[0]?.length > 12 ? `${labels[0].slice(0, 12)}...` : labels[0] 
+              : labels?.length > 15 
+                ? `${labels.slice(0, 15)}...` 
+                : `${labels[0].slice(0, 15)}...`}
             </div>
           ) : (
-            <div style={{ padding: "12px 16px" }} className="flex a-center">
+            <div style={{ padding: "12px 16px" }} className="flex a-center" onClick={toggleDropdown}>
               {title}
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
                 <path
@@ -107,9 +131,9 @@ const Filter = ({ id, title, selectedLabel, options, isOpen, setOpenFilter, mult
               </svg>
             </div>
           )}
-          {labels?.length ? (
+          {values?.length ? (
             <button
-              onClick={(e) => { clearAll(e); setTrueVal(false); }}
+              onClick={(e) => { clearAll(e); setTrueVal(false); setSearchFill('');clearSearch(e.target.id)}}
               style={{ cursor: "pointer", paddingRight: "12px" }}
               className="default_btn"
               id={`delete_${title}`}
@@ -120,50 +144,32 @@ const Filter = ({ id, title, selectedLabel, options, isOpen, setOpenFilter, mult
         </p>
         <div className={`types${isOpen ? '' : ' hidden'}`} onClick={stopPropagation}>
           {search && (
-            <form className="types_search flex a-center">
+            <form className="types_search flex">
               <input
                 type="text"
                 id={`search_${title}`}
+                value={searchFill}
                 placeholder={`Начните вводить ${title?.toLowerCase()}`}
-                onChange={(e) => setSearchFill(e.target.value)}
+                onInput={(e) => {
+                  const newValue = e.target.value;
+                  setSearchFill(newValue);
+                  handleSearch(newValue); // Pass the latest value to handleSearch
+                }}
               />
-              <button
-                id={`search_${id}`}
-                style={{ padding: "0 6px" }}
-                onClick={(e) => { e.preventDefault(); handleSearch(); }}
-              >
-                <svg
-                  style={{ color: "white", fontSize: "12px", margin: 0, padding: "12px 6px", width: "12px", height: "12px" }}
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="#000000"
-                  height="800px"
-                  width="800px"
-                  version="1.1"
-                  id="Capa_1"
-                  viewBox="0 0 488.4 488.4"
-                >
-                  <g>
-                    <g>
-                      <path
-                        style={{ fill: "white" }}
-                        d="M0,203.25c0,112.1,91.2,203.2,203.2,203.2c51.6,0,98.8-19.4,134.7-51.2l129.5,129.5c2.4,2.4,5.5,3.6,8.7,3.6    s6.3-1.2,8.7-3.6c4.8-4.8,4.8-12.5,0-17.3l-129.6-129.5c31.8-35.9,51.2-83,51.2-134.7c0-112.1-91.2-203.2-203.2-203.2    S0,91.15,0,203.25z M381.9,203.25c0,98.5-80.2,178.7-178.7,178.7s-178.7-80.2-178.7-178.7s80.2-178.7,178.7-178.7    S381.9,104.65,381.9,203.25z"
-                      />
-                    </g>
-                  </g>
-                </svg>
-              </button>
+              <button id={`search_clear_${id}`} className="clear_filter" onClick={(e) => {e?.preventDefault();console.log(e.target.id);setSearchFill('');clearSearch(e.target.id)}}>X</button>
             </form>
           )}
           <div className="filter_types" onScroll={(e) => handleFilterScroll(e, title)}>
-            {options?.map((option) => (
+            {sortedOptions?.map((option) => (
               <button
-                className="type w-100 flex a-center j-between"
+                className={`type w-100 flex a-center j-between ${!multiple && values?.includes(option.value) ? 'selected' : ''}`}
                 id={option?.value}
                 key={option?.value}
                 onClick={(e) => { handleOptionClick(option); !multiple && setTrueVal(true); }}
+                style={{ backgroundColor: !multiple && values?.includes(option.value) ? '#D9EDFC' : '' }}
               >
                 <div className='flex column a-start'>
-                  <p>{option?.label}</p>
+                  <p style={{width: "248px", whiteSpace:"nowrap", overflow:"hidden", textOverflow:"ellipsis"}}>{option?.label}</p>
                   <span className='label2'>{option?.label2}</span>
                 </div>
                 {multiple && (
@@ -188,6 +194,12 @@ const Filter = ({ id, title, selectedLabel, options, isOpen, setOpenFilter, mult
                 )}
               </button>
             ))}
+            {loader && 
+              <div className='loader'>
+                <div className="loader-spinner" style={{position: "relative", left: "40%"}}>
+                </div>
+              </div>
+            }
           </div>
           {multiple && (
             <div className="flex j-between w-100 types_actions">

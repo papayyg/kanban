@@ -2,7 +2,7 @@ import React from 'react'
 
 const NewTask = (button) => {
   return (
-    <button className='new_task flex a-center' id={button?.value} onClick={e => e.preventDefault()}>
+    <button className={`${button ? "new_task flex a-center" : "new_task flex a-center d-none"}`} id={button?.value} onClick={e => e.preventDefault()}>
       {button?.label}
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
       <g clipPath="url(#clip0_5564_166152)">

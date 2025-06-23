@@ -1,17 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-const Type = ({ type, types, selectedType, setSelectedType }) => {
+const Type = ({ type, types, setSelectedType }) => {
   const [show, setShow] = useState(false);
   const ref = useRef(null);
 
   const handleTypeClick = (type) => {
-    setSelectedType(type.value);
+    setSelectedType(type?.value);
     setShow(false);
   };
-
-  useEffect(() => {
-    setSelectedType(type.value);
-  },[])
 
   const handleClickOutside = (event) => {
     if (ref.current && !ref.current.contains(event.target)) {
@@ -26,21 +22,21 @@ const Type = ({ type, types, selectedType, setSelectedType }) => {
     };
   }, []);
 
-  // <svg class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="TableChartIcon"><path d="M10 10.02h5V21h-5zM17 21h3c1.1 0 2-.9 2-2v-9h-5v11zm3-18H5c-1.1 0-2 .9-2 2v3h19V5c0-1.1-.9-2-2-2zM3 19c0 1.1.9 2 2 2h3V10H3v9z"></path></svg>
-  // <svg class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="TableRowsIcon"><path d="M21 8H3V4h18v4zm0 2H3v4h18v-4zm0 6H3v4h18v-4z"></path></svg>
-
   return (
     <div ref={ref}>
-      {selectedType === "Kanban" ?
-      <button className='type_section flex a-center default_btn' id='Kanban' onClick={(e) => {e.preventDefault();setSelectedType("Spisok")}}>
+      {type?.value === "Kanban" ?
+      <button className='type_section flex a-center default_btn' id='Kanban' onClick={(e) => {e.preventDefault();setSelectedType("Spisok", "Список")}}>
         <svg width="20" height="20" class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="TableRowsIcon"><path d="M21 8H3V4h18v4zm0 2H3v4h18v-4zm0 6H3v4h18v-4z"></path></svg>
         <p>Вид: Список</p>
       </button>
-      : selectedType === "Spisok" ?
-      <button className='type_section flex a-center default_btn' id='Spisok' onClick={(e) => {e.preventDefault();setSelectedType("Kanban")}}>
+      : type?.value === "Spisok" ?
+      <button className='type_section flex a-center default_btn' id='Spisok' onClick={(e) => {e.preventDefault();setSelectedType("Kanban", "Канбан")}}>
         <svg width="20" height="20" class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="TableChartIcon"><path d="M10 10.02h5V21h-5zM17 21h3c1.1 0 2-.9 2-2v-9h-5v11zm3-18H5c-1.1 0-2 .9-2 2v3h19V5c0-1.1-.9-2-2-2zM3 19c0 1.1.9 2 2 2h3V10H3v9z"></path></svg>
         <p>Вид: Канбан</p>
-      </button> : null
+      </button> : <button className='type_section flex a-center default_btn' id='Spisok' onClick={(e) => {e.preventDefault();setSelectedType("Kanban", "Канбан")}}>
+        <svg width="20" height="20" class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="TableRowsIcon"><path d="M21 8H3V4h18v4zm0 2H3v4h18v-4zm0 6H3v4h18v-4z"></path></svg>
+        <p>Вид: Список</p>
+      </button>
       }
       {/* <p className={selectedType.label === undefined ? `type_btn flex a-center` : `selected_type bg-gray flex a-center`}>
         {selectedType.label === undefined ? (

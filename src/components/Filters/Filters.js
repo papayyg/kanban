@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Filter from './FilterElems/Filter';
 
-const Filters = ({ filterList }) => {
+const Filters = ({ filterList, show }) => {
   const [openFilter, setOpenFilter] = useState(null);
 
   const handleClickOutside = (event) => {
@@ -25,6 +25,7 @@ const Filters = ({ filterList }) => {
           {...filter} 
           isOpen={openFilter === filter.id} 
           setOpenFilter={setOpenFilter} 
+          show={show}
         />
       ))}
     </div>
