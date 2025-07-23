@@ -3,38 +3,49 @@ import React, { useState, useRef, useEffect } from 'react';
 const Filter = ({ id, title, selectedLabel, options, isOpen, setOpenFilter, multiple, search, loader }) => {
   const [labels, setLabels] = useState();
   const [values, setValues] = useState();
-  const [trueVal, setTrueVal] = useState(false);
+  const [draftLabels, setDraftLabels] = useState([]);
+  const [draftValues, setDraftValues] = useState([]);
+  // const [trueVal, setTrueVal] = useState(false);
   const [searchFill, setSearchFill] = useState("");
+  const [hasScrolledToBottom, setHasScrolledToBottom] = useState(false);
   const containerRef = useRef(null);
 
   useEffect(() => {
-    setLabels(selectedLabel?.map(obj => obj.label) || []);
-    setValues(selectedLabel?.map(obj => obj.value) || []);
-  }, [])
+    const initialLabels = selectedLabel?.map(obj => obj.label) || [];
+    const initialValues = selectedLabel?.map(obj => obj.value) || [];
+    setLabels(initialLabels);
+    setValues(initialValues);
+    setDraftLabels(initialLabels);
+    setDraftValues(initialValues);
+  }, []);
 
   const handleOptionClick = (option) => {
+    const optionLabel = option.label;
+    const optionValue = option.value;
+  
     if (multiple) {
-      const optionLabel = option.label;
-      const optionValue = option.value;
-      setLabels((prevLabels) => {
-        if (prevLabels.includes(optionLabel)) {
-          return prevLabels.filter(label => label !== optionLabel);
-        } else {
-          return [...prevLabels, optionLabel];
-        }
-      });
-      setValues((prevValue) => {
-        if (prevValue?.includes(optionValue)) {
-          return prevValue?.filter(value => value !== optionValue);
-        } else {
-          return [...prevValue, optionValue];
-        }
-      });
+      setDraftLabels((prev) =>
+        prev.includes(optionLabel) ? prev.filter(l => l !== optionLabel) : [...prev, optionLabel]
+      );
+      setDraftValues((prev) =>
+        prev.includes(optionValue) ? prev.filter(v => v !== optionValue) : [...prev, optionValue]
+      );
     } else {
-      // Single selection
-      setLabels([option.label]);
-      setValues([option.value]);
-      setTrueVal(true); // Set trueVal to true to enable Apply button for single select
+      const newLabels = [optionLabel];
+      const newValues = [optionValue];
+    
+      // Set states
+      setLabels(newLabels);
+      setValues(newValues);
+      setDraftLabels(newLabels);
+      setDraftValues(newValues);
+    
+      // Apply immediately
+      document.action_container = `{"filter_${id}": ${JSON.stringify(newValues)}}`;
+      document.getElementById("action_trigger_main").click();
+      
+      setOpenFilter(null); // Close dropdown
+      setSearchFill('');   // Clear search if needed
     }
   };
 
@@ -48,8 +59,8 @@ const Filter = ({ id, title, selectedLabel, options, isOpen, setOpenFilter, mult
   };
 
   const handleFilterScroll = (e, title) => {
-    const target = e.target;
-    if (target.scrollHeight - target.scrollTop === target.clientHeight) {
+    const target = e?.target;
+    if (target?.scrollHeight - target?.scrollTop === target?.clientHeight) {
       document.getElementById("scrollAction_filter").id = `scrollAction_filter_${title}`;
       document.getElementById(`scrollAction_filter_${title}`).click(e);
       document.getElementById(`scrollAction_filter_${title}`).id = `scrollAction_filter`;
@@ -57,27 +68,69 @@ const Filter = ({ id, title, selectedLabel, options, isOpen, setOpenFilter, mult
   };
 
   const clearAll = (e) => {
-    e.preventDefault();
-    document.action_container = `{"filter_${id}": "clear"}`;
-    document.getElementById("action_trigger_main").click();
+    e?.preventDefault();
+  
+    // 1. Показать loader сразу
+    if (typeof document.setLoader === 'function') {
+      document.setLoader(true);
+    }
+  
+    // 2. Сбросить локальные состояния сразу
     setLabels([]);
     setValues([]);
+    setDraftLabels([]);
+    setDraftValues([]);
+    setOpenFilter(null);
+    setSearchFill('');
+  
+    // 3. Клик в 1С через 0ms
+    setTimeout(() => {
+      document.action_container = `{"filter_${id}": "clear"}`;
+      document.getElementById("action_trigger_main").click();
+    }, 0);
   };
+  
 
   const clearFilter = (e) => {
-    document.action_container = `{"filter_${id}": ""}`;
-    document.getElementById("action_trigger_main").click();
+    // 1. Показать loader сразу
+    if (typeof document.setLoader === 'function') {
+      document.setLoader(true);
+    }
+  
+    // 2. Сбросить стейты сразу
     setLabels([]);
     setValues([]);
-    return (document.action_container)
+    setDraftLabels([]);
+    setDraftValues([]);
+    setOpenFilter(null);
+    setSearchFill('');
+  
+    // 3. Клик в 1С через 0ms
+    setTimeout(() => {
+      document.action_container = `{"filter_${id}": ""}`;
+      document.getElementById("action_trigger_main").click();
+    }, 0);
   };
 
-  const handleApply = () => {
-    document.action_container = `{"filter_${id}": ${JSON.stringify(values)}}`;
-    console.log(document.action_container);
-    document.getElementById("action_trigger_main").click();
+  const handleApply = (e) => {
+    e?.preventDefault();
+  
+    // 1. Loader-i dərhal göstər
+    if (typeof document.setLoader === 'function') {
+      document.setLoader(true);
+    }
+  
+    // 2. States-ləri dərhal yaz
+    setLabels(draftLabels);
+    setValues(draftValues);
     setOpenFilter(null);
-    setTrueVal(false); // Reset after applying
+    setSearchFill('');
+  
+    // 3. 1C click-i bir az gec (0 ms sonra) göndər
+    setTimeout(() => {
+      document.action_container = `{"filter_${id}": ${JSON.stringify(draftValues)}}`;
+      document.getElementById("action_trigger_main").click();
+    }, 0);
   };
 
   const handleSearch = (searchValue) => {
@@ -92,9 +145,9 @@ const Filter = ({ id, title, selectedLabel, options, isOpen, setOpenFilter, mult
     document.getElementById("action_trigger_main").click();
   };
 
-  useEffect(() => {
-    trueVal && handleApply();
-  }, [labels, values]);
+  // useEffect(() => {
+  //   trueVal && handleApply();
+  // }, [labels, values]);
 
   // Sort options so that the selected item is first (only for single select)
   const sortedOptions = multiple 
@@ -107,18 +160,18 @@ const Filter = ({ id, title, selectedLabel, options, isOpen, setOpenFilter, mult
 
   return (
     <div className="filter-container" ref={containerRef}>
-      <div className="type_btn filter_btn" onClick={() => setTrueVal(true)}>
+      <div className="type_btn filter_btn">
         <p
           className={values?.length ? 'selected_type bg-gray flex a-center' : 'type_btn flex a-center'}
           id={id}
         >
-          {values?.length ? (
-            <div style={{ padding: "10px 0 10px 12px" }} onClick={toggleDropdown}>
+          {labels?.length ? (
+            <div style={{ padding: "14px 0 14px 12px" }} onClick={toggleDropdown}>
               {title}: {
-              multiple ? values?.length > 1 ? values?.length : labels[0]?.length > 12 ? `${labels[0].slice(0, 12)}...` : labels[0] 
-              : labels?.length > 15 
-                ? `${labels.slice(0, 15)}...` 
-                : `${labels[0].slice(0, 15)}...`}
+              multiple ? labels?.length > 1 ? labels?.length : labels[0]?.length > 6 ? `${labels[0].slice(0, 6)}...` : labels[0] 
+              : labels?.length > 6 
+                ? `${labels.slice(0, 8)}...` 
+                : `${labels[0].slice(0, 8)}...`}
             </div>
           ) : (
             <div style={{ padding: "12px 16px" }} className="flex a-center" onClick={toggleDropdown}>
@@ -133,7 +186,7 @@ const Filter = ({ id, title, selectedLabel, options, isOpen, setOpenFilter, mult
           )}
           {values?.length ? (
             <button
-              onClick={(e) => { clearAll(e); setTrueVal(false); setSearchFill('');clearSearch(e.target.id)}}
+              onClick={(e) => { clearAll(e); setSearchFill('');clearSearch(e?.target?.id)}}
               style={{ cursor: "pointer", paddingRight: "12px" }}
               className="default_btn"
               id={`delete_${title}`}
@@ -151,22 +204,22 @@ const Filter = ({ id, title, selectedLabel, options, isOpen, setOpenFilter, mult
                 value={searchFill}
                 placeholder={`Начните вводить ${title?.toLowerCase()}`}
                 onInput={(e) => {
-                  const newValue = e.target.value;
+                  const newValue = e?.target?.value;
                   setSearchFill(newValue);
                   handleSearch(newValue); // Pass the latest value to handleSearch
                 }}
               />
-              <button id={`search_clear_${id}`} className="clear_filter" onClick={(e) => {e?.preventDefault();console.log(e.target.id);setSearchFill('');clearSearch(e.target.id)}}>X</button>
+              <button id={`search_clear_${id}`} className="clear_filter" onClick={(e) => {e?.preventDefault();console.log(e?.target?.id);setSearchFill('');clearSearch(e?.target?.id)}}>X</button>
             </form>
           )}
           <div className="filter_types" onScroll={(e) => handleFilterScroll(e, title)}>
             {sortedOptions?.map((option) => (
               <button
-                className={`type w-100 flex a-center j-between ${!multiple && values?.includes(option.value) ? 'selected' : ''}`}
+                className={`type w-100 flex a-center j-between ${!multiple && draftValues?.includes(option.value) ? 'selected' : ''}`}
                 id={option?.value}
                 key={option?.value}
-                onClick={(e) => { handleOptionClick(option); !multiple && setTrueVal(true); }}
-                style={{ backgroundColor: !multiple && values?.includes(option.value) ? '#D9EDFC' : '' }}
+                onClick={(e) => { handleOptionClick(option) }}
+                style={{ backgroundColor: !multiple && draftValues?.includes(option.value) ? '#D9EDFC' : '' }}
               >
                 <div className='flex column a-start'>
                   <p style={{width: "248px", whiteSpace:"nowrap", overflow:"hidden", textOverflow:"ellipsis"}}>{option?.label}</p>
@@ -174,7 +227,7 @@ const Filter = ({ id, title, selectedLabel, options, isOpen, setOpenFilter, mult
                 </div>
                 {multiple && (
                   <span style={{ display: "inline-block" }} className="elem_check">
-                    {values?.includes(option?.value) ? (
+                    {draftValues?.includes(option?.value) ? (
                       <svg
                         width="18"
                         height="18"
@@ -194,12 +247,21 @@ const Filter = ({ id, title, selectedLabel, options, isOpen, setOpenFilter, mult
                 )}
               </button>
             ))}
-            {loader && 
-              <div className='loader'>
-                <div className="loader-spinner" style={{position: "relative", left: "40%"}}>
-                </div>
-              </div>
-            }
+            <div
+              className="loader"
+              style={{
+                height: loader ? "70px" : "0px",
+                transition: "height 0.2s ease",
+                overflow: "hidden"
+              }}
+            >
+              {loader && (
+                <div
+                  className="loader-spinner"
+                  style={{ position: "relative", left: "40%", top: "19%" }}
+                />
+              )}
+            </div>
           </div>
           {multiple && (
             <div className="flex j-between w-100 types_actions">

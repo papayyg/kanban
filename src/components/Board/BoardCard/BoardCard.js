@@ -64,6 +64,25 @@ const BoardCard = (elem) => {
                         <span>{el?.label}</span>
                     </div>
                 ))}
+                {deal?.call_status?.name &&
+                    <div className='card_call_status' id={`${deal.id}_${deal.call_status?.name}`}>
+                        <p>Статус звонка:</p>
+                        <div
+                            style={{
+                            borderRadius: "20px",
+                            color: deal?.call_status?.color,
+                            background: deal?.call_status?.bgColor,
+                            padding: "4px 12px",
+                            fontSize:"13px",
+                            marginTop:"4px",
+                            fontWeight: 500,
+                            display: "inline-block"
+                            }}
+                        >
+                            {deal?.call_status?.label}
+                        </div>
+                    </div>
+                }
                 <div className='card_functions flex a-center j-between'>
                     <div className='card_functions-left flex a-center'>
                         <button id={`card_task${deal?.id}`} className='card_tasks default_btn flex a-center' onClick={(e) => { toggleActions(e, 'task', deal?.id); }}>

@@ -50,7 +50,7 @@ const List = ({ menu, filters, board, list, setData, showFiltersBtn }) => {
         </tbody>
         {list?.loader && 
         <div className='loader'>
-          <div className="loader-spinner" style={{left: "50%", width: "70px", height: "70px"}}>
+          <div className="loader-spinner" style={{left: "48%", width: "70px", height: "70px"}}>
           </div>
         </div>
         }
