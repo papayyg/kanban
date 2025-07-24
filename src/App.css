@@ -189,8 +189,7 @@ h1,h2,h3,h4,h5,h6,p,div{
   background-color: #F8F8F9;
 }
 .filter-container{
-  min-height: 44px;
-  max-height: 44px;
+  height: 100%;
 }
 .filter_btn:hover{
   border: 1px solid #127CCA;

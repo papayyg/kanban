@@ -17,6 +17,7 @@ const handleContactsScroll = (e, id) => {
 const BoardElem = (elem) => {
   const [clicked, setClicked] = useState(false);
 
+
   const handleDragOver = (e) => {
     e?.preventDefault();
     elem.setDragOut(elem);
@@ -46,7 +47,7 @@ const BoardElem = (elem) => {
       <BoardTitle {...elem} key={elem.title} /> 
       <div 
         className='board_elem' 
-        style={elem?.filters ? { height: "calc(100vh - 215px)" } : { height: "calc(100vh - 180px)" }}
+        style={elem?.filters ? { height: "calc(100vh - 220px)" } : { height: "calc(100vh - 180px)" }}
         id={elem.id}  
         role="button" 
         tabIndex={elem.id}

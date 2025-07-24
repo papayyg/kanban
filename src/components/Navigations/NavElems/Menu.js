@@ -13,72 +13,11 @@ const Menu = ({ startDate, endDate, menu, updateMenu, showManager, showResponsib
   const showSubmenu = (item) => {
     setSubmenu(item);
   }
-  // useEffect(() => {
-  //   const buttonTd = {
-  //       content: 'Сейчас', className: 'custom-button-classname', onClick: (dp) => {
-  //           let date = new Date();
-  //           dp.selectDate(date, { updateTime: true });
-  //           dp.setViewDate(date);
-  //           dp.hide()
-  //       }
-  //   }
-
-  //   const buttonSv = {
-  //       content: 'Выбрать', className: 'custom-button-classname', onClick: (dp) => {
-  //           dp.hide()
-  //       }
-  //   }
-
-  // const DatePickerEvents = new AirDatepicker('#quickInput_dateEventValue', {
-  //     selectedDates: [new Date()],
-  //     timepicker: true,
-  //     minutesStep: 5,
-  //     buttons: [buttonTd, buttonSv],
-  //     onSelect({ date, formattedDate, datepicker }) {
-  //         document.quickInput_EventDate = date.toISOString()
-  //         setDate(document.quickInput_EventDate)
-  //     },
-  //     onShow() {
-  //       document.querySelector('.air-datepicker').style.zIndex = 9999;
-  //     },
-  // })
-  // document.quickInput_EventDate = DatePickerEvents.selectedDates[0].toISOString()
-
-  // document.setEventDate = (e) => {
-  //     document.quickInput_EventDate = e.toISOString()
-  //     setDate(document.quickInput_EventDate)
-  //     // document.getElementById("quickInput_dateEventValue").value = e.toISOString()
-  // }
-
-  // document.updateDateInput = (date) => {
-  //         const formattedDate = formatDate(new Date(date));
-  //         document.getElementById("quickInput_dateEventValue").value = formattedDate;
-  //         setDate(formattedDate); // Assuming setDate is another function you have defined
-  //         DatePickerEvents.selectDate(date); // Update the selected date in the calendar
-  // }
-
-  // // Function to format the date as "DD.MM.YYYY HH:mm"
-  // const formatDate = (date) => {
-  //         const day = String(date.getDate()).padStart(2, '0');
-  //         const month = String(date.getMonth() + 1).padStart(2, '0');
-  //         const year = date.getFullYear();
-  //         const hours = String(date.getHours()).padStart(2, '0');
-  //         const minutes = String(date.getMinutes()).padStart(2, '0');
-  //         return `${day}.${month}.${year} ${hours}:${minutes}`;
-  // };
-  // }, [])
 
   const handleClickOutside = (event) => {
-    // const datepickerElement = document.querySelector('.air-datepicker'); // Datepicker container
-    // const datepickerInput = document.getElementById('quickInput_dateEventValue'); // Datepicker input
-
-    // Check if the click is outside of the menu and not on the datepicker or its input
     if (
       ref.current &&
       !ref.current.contains(event.target)
-      // && 
-      // !(datepickerElement && datepickerElement.contains(event.target)) && 
-      // !(datepickerInput && datepickerInput.contains(event.target))
     ) {
       setShowMenu(false);
     }
@@ -100,31 +39,6 @@ const Menu = ({ startDate, endDate, menu, updateMenu, showManager, showResponsib
       setActiveDropdown(item.value); // Set the clicked dropdown as active
     }
   };
-
-  // const handleDropdownItem = (itemValue) => {
-  //   const updatedMenu = menu.map(item => {
-  //     if (item.list) {
-  //       return {
-  //         ...item,
-  //         list: item.list.map(subItem => {
-  //           if (subItem.value === itemValue) {
-  //             return {
-  //               ...subItem,
-  //               checked: !subItem.checked // Toggle the checked state
-  //             };
-  //           }
-  //           return subItem;
-  //         })
-  //       };
-  //     }
-  //     return item;
-  //   });
-  
-  //   // Call the updateMenu function passed from the parent
-  //   updateMenu(updatedMenu);
-  
-  //   console.log(updatedMenu, "updatedMenu");
-  // };
 
   return (
     <div className='menu_section' id="menuBtn" ref={ref}>
@@ -262,25 +176,7 @@ const Menu = ({ startDate, endDate, menu, updateMenu, showManager, showResponsib
               </button>
             )
           ))}
-          {/* <div className='menu_option flex a-center'>
-            <input type="checkbox" checked={showManager} id="showManager" />
-            Показывать автора в сделке
-          </div>
-          <div className='menu_option flex a-center'>
-            <input type="checkbox" checked={showResponsible} id="showResponsible" />
-            Показывать ответственного в сделке
-          </div> */}
           <DateRangePicker startDay={startDate} endDay={endDate} />
-          {/* <div className='menu_date'>
-            <p>Дата:</p>
-            <form>
-            <input
-              type="text"
-              className="air-datepicker-input-ms mglr10 pointer"
-              id="quickInput_dateEventValue"
-              readOnly={true}
-            /></form>
-          </div> */}
         </div>
       </div>
     </div>

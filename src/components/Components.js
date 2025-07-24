@@ -54,7 +54,7 @@ const Components = ({
 
       {selectedType === 'Kanban' && (
         <Board
-          board={board}
+          board={board || []} 
           filters={filters}
           loader2={loader2}
           setDragEnter={setDragEnter}

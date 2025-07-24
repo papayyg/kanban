@@ -18,13 +18,13 @@ const Filters = ({ filterList, show }) => {
   }, []);
 
   return (
-    <div className='filters flex a-center'>
+    <div className='filters flex a-center' style={{ maxHeight: 58 }}>
       {filterList?.map((filter) => (
-        <Filter 
-          key={filter.id} 
-          {...filter} 
-          isOpen={openFilter === filter.id} 
-          setOpenFilter={setOpenFilter} 
+        <Filter
+          key={filter.id}
+          {...filter}
+          isOpen={openFilter === filter.id}
+          setOpenFilter={setOpenFilter}
           show={show}
         />
       ))}
