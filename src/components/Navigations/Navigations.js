@@ -1,17 +1,17 @@
-import React,{useEffect, useState} from 'react';
-import Menu from './NavElems/Menu';
+import React, { useEffect, useState } from 'react';
+import Menu from './Menu/Menu';
 import NewTask from './NavElems/NewTask';
 import Search from './NavElems/Search';
 import ShowFiltersBtn from './NavElems/ShowFiltersBtn';
 import Type from './NavElems/Type';
-import 'react-tooltip/dist/react-tooltip.css'; 
+import 'react-tooltip/dist/react-tooltip.css';
 
 const Navigations = (menu) => {
 
   useEffect(() => {
     const refreshBtn = document.getElementById("refresh");
     if (refreshBtn) refreshBtn.style.cursor = 'pointer';
-  
+
     // Only mark navLoaded when actual data is there
     if (menu?.menuList || menu?.type || menu?.button) {
       menu.setNavLoaded?.(true);
@@ -51,19 +51,17 @@ const Navigations = (menu) => {
             ></path>
           </svg>
         </button>
-        <ShowFiltersBtn {...menu} />
-        {menu?.menuBtn && (
-          <Menu
-            startDate={menu.startDate}
-            endDate={menu.endDate}
-            menu={menu.menuList}
-            updateMenu={menu.updateMenu}
-            showManager={menu.showManager}
-            showResponsible={menu.showResponsible}
-            date={menu.date}
-            setDate={menu.setDate}
-          />
-        )}
+        <ShowFiltersBtn />
+        <Menu
+          startDate={menu.startDate}
+          endDate={menu.endDate}
+          menu={menu.menuList}
+          updateMenu={menu.updateMenu}
+          showManager={menu.showManager}
+          showResponsible={menu.showResponsible}
+          date={menu.date}
+          setDate={menu.setDate}
+        />
       </div>
     </form>
   );

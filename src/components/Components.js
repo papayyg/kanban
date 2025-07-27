@@ -21,20 +21,24 @@ const Components = ({
   setData,
   setSelectedTask,
   setDate,
+  columns
 }) => {
   useEffect(() => {
-    // Прячем прелоадер, когда пришли все данные
-    if (menu && selectedType && board !== undefined) {
-      const preloader = document.getElementById('preloader');
-      if (preloader) {
-        preloader.style.opacity = '0';
-        preloader.style.transition = 'opacity 0.3s ease';
-        setTimeout(() => {
-          if (preloader?.parentNode) preloader.remove();
-        }, 300);
-      }
+    const preloader = document.getElementById('preloader');
+    if (!preloader) return;
+    // If columns loaded, show columns behind but keep overlay
+    if (columns) {
+      // keep overlay; nothing to change
     }
-  }, [menu, selectedType, board]);
+    // If board tasks loaded, hide preloader
+    if (board && Array.isArray(board)) {
+      preloader.style.opacity = '0';
+      preloader.style.transition = 'opacity 0.3s ease';
+      setTimeout(() => {
+        preloader.parentNode?.removeChild(preloader);
+      }, 300);
+    }
+  }, [columns, board]);
 
   return (
     <div>
@@ -47,14 +51,15 @@ const Components = ({
         setShowFilter={setShowFilter}
         setData={setData}
         setDate={setDate}
-        setNavLoaded={() => {}}
+        setNavLoaded={() => { }}
       />
 
-      {filters?.show && <Filters {...filters} />}
+      {filters?.show ? <Filters {...filters} /> : null}
 
       {selectedType === 'Kanban' && (
         <Board
-          board={board || []} 
+          columns={columns}
+          board={board || []}
           filters={filters}
           loader2={loader2}
           setDragEnter={setDragEnter}

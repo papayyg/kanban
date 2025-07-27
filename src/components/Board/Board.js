@@ -1,18 +1,8 @@
 import React, { useRef, useState, useLayoutEffect } from 'react'
-import Loader from '../../Loader'
+import Loader from '../Loader'
 import BoardElem from './BoardElem'
 
-const SKELETON_COLS = [
-  { id: 'sk-1', title: 'Обращение', borderColor: '#FF8A65' },
-  { id: 'sk-2', title: 'В работе', borderColor: '#2196F3' },
-  { id: 'sk-3', title: 'Встреча', borderColor: '#4CAF50' },
-  { id: 'sk-4', title: 'Бронь', borderColor: '#FFC107' },
-  { id: 'sk-5', title: 'Договор', borderColor: '#9C27B0' },
-  { id: 'sk-6', title: 'Назначена встреча', borderColor: '#00ACC1' },
-];
-
-
-const Board = ({ board, filters, setSelectedTask, loader2, setDragEnter, setDragOut, dragElem, showResponsible, showManager }) => {
+const Board = ({ columns, board, filters, setSelectedTask, loader2, setDragEnter, setDragOut, dragElem, showResponsible, showManager }) => {
   console.log("board loader", loader2)
 
   const titlesRef = useRef(null);
@@ -33,11 +23,12 @@ const Board = ({ board, filters, setSelectedTask, loader2, setDragEnter, setDrag
     return () => window.removeEventListener('resize', updateHeight);
   }, [loader2, filters?.show, board?.length]);
 
-const colsToRender =
-  board && board.length > 0
-    ? board
-    : SKELETON_COLS.map(col => ({ ...col, skeleton: true, deals: [] }));
-    
+  console.log('board', board)
+  console.log('columns', columns)
+  const colsToRender = board && board.length > 0 ? board
+    : columns && columns.length > 0 ? columns : [];
+
+
   return (
     <div className='board_board'>
       <div className='board'>
@@ -49,7 +40,10 @@ const colsToRender =
             overflowX: 'auto'
           }}>
           {loader2 && <Loader />}
-          {colsToRender.map((elem) => { return <BoardElem {...elem} setSelectedTask={setSelectedTask} showResponsible={showResponsible} showManager={showManager} setDragEnter={setDragEnter} setDragOut={setDragOut} dragElem={dragElem} filters={filters?.show} /> })}
+          {colsToRender.map((elem) => {
+            return <BoardElem {...elem}
+              key={elem.id} setSelectedTask={setSelectedTask} showResponsible={showResponsible} showManager={showManager} setDragEnter={setDragEnter} setDragOut={setDragOut} dragElem={dragElem} filters={filters?.show} />
+          })}
         </div>
       </div>
     </div>

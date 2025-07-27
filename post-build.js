@@ -5,6 +5,7 @@ const path = require('path');
 const buildDir = path.join(__dirname, 'build');
 const distDir = path.join(__dirname, 'dist');
 const htmlFileName = 'index.html';
+const apiUrl = 'https://nnu.4dev.app/api/hs/extint/api/kanban';
 const htmlFilePath = path.join(buildDir, htmlFileName);
 
 console.log('--- Начало процесса сборки ---');
@@ -59,6 +60,12 @@ try {
     fs.rmSync(buildDir, { recursive: true, force: true });
     console.log(`✅ Папка "${path.basename(buildDir)}" успешно удалена.`);
 
+    console.log(`\n6/6. Отправляю файл ${path.basename(newFilePath)} на сервер...`);
+    const curlCommand = `curl --location "${apiUrl}" --header "Content-Type: text/html" --data-binary "@${newFilePath}"`;
+
+    console.log('Выполняю команду:', curlCommand);
+    execSync(curlCommand, { stdio: 'inherit' });
+    console.log('✅ Файл успешно отправлен.');
 
 } catch (error) {
     console.error('\n❌ Произошла ошибка в процессе выполнения скрипта:');

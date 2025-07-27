@@ -23,7 +23,6 @@ const BoardElem = (elem) => {
     elem.setDragOut(elem);
     e.dataTransfer.setData("text/plain", elem.name);
     elem.dragElem();
-    console.log("Dragging over...");
     // Removed the click event from here to prevent multiple triggers
   };
 
