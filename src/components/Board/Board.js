@@ -3,8 +3,6 @@ import Loader from '../Loader'
 import BoardElem from './BoardElem'
 
 const Board = ({ columns, board, filters, setSelectedTask, loader2, setDragEnter, setDragOut, dragElem, showResponsible, showManager }) => {
-  console.log("board loader", loader2)
-
   const titlesRef = useRef(null);
   const [titlesHeight, setTitlesHeight] = useState('auto');
 

@@ -1,7 +1,6 @@
 import React, { useState, useRef, useCallback } from 'react';
 import DateRangePicker from '../NavElems/Calendar'
 
-// Импортируем все наши новые части
 import { useClickOutside } from './useClickOutside';
 import { SettingsIcon } from './Icons';
 import { SimpleMenuItem } from './SimpleMenuItem';
@@ -15,19 +14,16 @@ const Menu = ({ startDate, endDate, menu, updateMenu }) => {
 
   const menuRef = useRef(null);
 
-  // Хук закрывает меню, если клик был снаружи
   useClickOutside(menuRef, () => {
     setMenuVisible(false);
   });
 
-  // Мемоизируем функции, чтобы избежать лишних рендеров дочерних компонентов
   const handleToggleMenu = useCallback(() => {
     setMenuVisible(prev => !prev);
   }, []);
 
   const handleUpdateMenu = useCallback((groupValue, itemValue) => {
     updateMenu(groupValue, itemValue);
-    // Закрываем выпадающий список после выбора
     setActiveDropdown(null);
   }, [updateMenu]);
 
@@ -39,7 +35,14 @@ const Menu = ({ startDate, endDate, menu, updateMenu }) => {
     const hasSubItems = item.list?.length > 0;
 
     if (!hasSubItems) {
-      return <SimpleMenuItem key={item.value} item={item} onClick={() => setMenuVisible(false)} />;
+      return (
+        <SimpleMenuItem
+          key={item.value}
+          item={item}
+          onClick={() => setMenuVisible(false)}
+          onMouseEnter={() => setActiveSubmenu(null)}
+        />
+      );
     }
 
     if (item.isDropdown) {
@@ -50,6 +53,7 @@ const Menu = ({ startDate, endDate, menu, updateMenu }) => {
           isActive={activeDropdown === item.value}
           onToggle={() => handleToggleDropdown(item.value)}
           onItemClick={handleUpdateMenu}
+          onMouseEnter={() => setActiveSubmenu(null)}
         />
       );
     }
@@ -67,7 +71,7 @@ const Menu = ({ startDate, endDate, menu, updateMenu }) => {
 
   return (
     <div className="menu_section" ref={menuRef}>
-      <button className="default_btn menu_btn" title="Настройки" onClick={handleToggleMenu}>
+      <button className="default_btn menu_btn" title="Настройки" onClick={(e) => { e.preventDefault(); handleToggleMenu() }}>
         <SettingsIcon />
       </button>
 

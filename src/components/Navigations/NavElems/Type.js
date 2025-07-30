@@ -26,15 +26,15 @@ const Type = ({ type, types, selectedType, setSelectedType }) => {
     <div ref={ref}>
       {selectedType === "Kanban" ?
         <button className='type_section flex a-center default_btn' id='Kanban' onClick={(e) => { e.preventDefault(); setSelectedType("Spisok") }}>
-          <svg width="20" height="20" class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="TableRowsIcon"><path d="M21 8H3V4h18v4zm0 2H3v4h18v-4zm0 6H3v4h18v-4z"></path></svg>
+          <svg width="20" height="20" className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="TableRowsIcon"><path d="M21 8H3V4h18v4zm0 2H3v4h18v-4zm0 6H3v4h18v-4z"></path></svg>
           <p>Вид: Список</p>
         </button>
         : selectedType === "Spisok" ?
           <button className='type_section flex a-center default_btn' id='Spisok' onClick={(e) => { e.preventDefault(); setSelectedType("Kanban") }}>
-            <svg width="20" height="20" class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="TableChartIcon"><path d="M10 10.02h5V21h-5zM17 21h3c1.1 0 2-.9 2-2v-9h-5v11zm3-18H5c-1.1 0-2 .9-2 2v3h19V5c0-1.1-.9-2-2-2zM3 19c0 1.1.9 2 2 2h3V10H3v9z"></path></svg>
+            <svg width="20" height="20" className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="TableChartIcon"><path d="M10 10.02h5V21h-5zM17 21h3c1.1 0 2-.9 2-2v-9h-5v11zm3-18H5c-1.1 0-2 .9-2 2v3h19V5c0-1.1-.9-2-2-2zM3 19c0 1.1.9 2 2 2h3V10H3v9z"></path></svg>
             <p>Вид: Канбан</p>
           </button> : <button className='type_section flex a-center default_btn' id='Spisok' onClick={(e) => { e.preventDefault(); setSelectedType("Kanban") }}>
-            <svg width="20" height="20" class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="TableRowsIcon"><path d="M21 8H3V4h18v4zm0 2H3v4h18v-4zm0 6H3v4h18v-4z"></path></svg>
+            <svg width="20" height="20" className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="TableRowsIcon"><path d="M21 8H3V4h18v4zm0 2H3v4h18v-4zm0 6H3v4h18v-4z"></path></svg>
             <p>Вид: Список</p>
           </button>
       }

@@ -1,14 +1,14 @@
 import React from 'react';
 import { CloseIcon } from './Icons';
 
-export const DropdownMenuItem = ({ item, isActive, onToggle, onItemClick }) => {
+export const DropdownMenuItem = ({ item, isActive, onToggle, onItemClick, onMouseEnter }) => {
     const selectedLabels = item.list
         .filter((subItem) => subItem.checked)
         .map((subItem) => subItem.label)
         .join(', ');
 
     return (
-        <div className="dropdown-container">
+        <div className="dropdown-container" onMouseEnter={onMouseEnter}>
             <div className="dropdown-header" onClick={onToggle}>
                 {item.label}: {selectedLabels}
                 {isActive && (

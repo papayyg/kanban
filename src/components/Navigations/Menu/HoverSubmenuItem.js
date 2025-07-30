@@ -5,8 +5,8 @@ export const HoverSubmenuItem = ({ item, isActive, onMouseEnter, onItemClick }) 
     return (
         <div onMouseEnter={onMouseEnter}>
             <button className="default_btn flex a-center">
-                {item.label}
                 <SubmenuArrowIcon />
+                {item.label}
             </button>
 
             {isActive && (
@@ -14,6 +14,7 @@ export const HoverSubmenuItem = ({ item, isActive, onMouseEnter, onItemClick }) 
                     {item.list.map((submenuItem) => (
                         <button
                             key={submenuItem.value}
+                            id={submenuItem.value}
                             className="submenuItem default_btn flex j-between a-center"
                             onClick={() => onItemClick(item.value, submenuItem.value)}
                         >
