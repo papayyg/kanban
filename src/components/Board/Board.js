@@ -21,8 +21,6 @@ const Board = ({ columns, board, filters, setSelectedTask, loader2, setDragEnter
     return () => window.removeEventListener('resize', updateHeight);
   }, [loader2, filters?.show, board?.length]);
 
-  console.log('board', board)
-  console.log('columns', columns)
   const colsToRender = board && board.length > 0 ? board
     : columns && columns.length > 0 ? columns : [];
 

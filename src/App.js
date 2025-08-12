@@ -106,7 +106,7 @@ function App() {
         setDragEnter={setDragEnter}
         setDragOut={setDragOut}
         dragElem={handleDragEnd}
-        loader2={data && data.loader}
+        loader2={data.loader}
       />
     </div>
   );
