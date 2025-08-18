@@ -22,7 +22,7 @@ const Filter = ({ id, title, selectedLabel, options, isOpen, setOpenFilter, mult
   const handleOptionClick = (option) => {
     const optionLabel = option.label;
     const optionValue = option.value;
-  
+
     if (multiple) {
       setDraftLabels((prev) =>
         prev.includes(optionLabel) ? prev.filter(l => l !== optionLabel) : [...prev, optionLabel]
@@ -33,17 +33,17 @@ const Filter = ({ id, title, selectedLabel, options, isOpen, setOpenFilter, mult
     } else {
       const newLabels = [optionLabel];
       const newValues = [optionValue];
-    
+
       // Set states
       setLabels(newLabels);
       setValues(newValues);
       setDraftLabels(newLabels);
       setDraftValues(newValues);
-    
+
       // Apply immediately
       document.action_container = `{"filter_${id}": ${JSON.stringify(newValues)}}`;
       document.getElementById("action_trigger_main").click();
-      
+
       setOpenFilter(null); // Close dropdown
       setSearchFill('');   // Clear search if needed
     }
@@ -69,12 +69,12 @@ const Filter = ({ id, title, selectedLabel, options, isOpen, setOpenFilter, mult
 
   const clearAll = (e) => {
     e?.preventDefault();
-  
+
     // 1. Показать loader сразу
     if (typeof document.setLoader === 'function') {
       document.setLoader(true);
     }
-  
+
     // 2. Сбросить локальные состояния сразу
     setLabels([]);
     setValues([]);
@@ -82,21 +82,21 @@ const Filter = ({ id, title, selectedLabel, options, isOpen, setOpenFilter, mult
     setDraftValues([]);
     setOpenFilter(null);
     setSearchFill('');
-  
+
     // 3. Клик в 1С через 0ms
     setTimeout(() => {
       document.action_container = `{"filter_${id}": "clear"}`;
       document.getElementById("action_trigger_main").click();
     }, 0);
   };
-  
+
 
   const clearFilter = (e) => {
     // 1. Показать loader сразу
     if (typeof document.setLoader === 'function') {
       document.setLoader(true);
     }
-  
+
     // 2. Сбросить стейты сразу
     setLabels([]);
     setValues([]);
@@ -104,7 +104,7 @@ const Filter = ({ id, title, selectedLabel, options, isOpen, setOpenFilter, mult
     setDraftValues([]);
     setOpenFilter(null);
     setSearchFill('');
-  
+
     // 3. Клик в 1С через 0ms
     setTimeout(() => {
       document.action_container = `{"filter_${id}": ""}`;
@@ -114,18 +114,18 @@ const Filter = ({ id, title, selectedLabel, options, isOpen, setOpenFilter, mult
 
   const handleApply = (e) => {
     e?.preventDefault();
-  
+
     // 1. Loader-i dərhal göstər
     if (typeof document.setLoader === 'function') {
       document.setLoader(true);
     }
-  
+
     // 2. States-ləri dərhal yaz
     setLabels(draftLabels);
     setValues(draftValues);
     setOpenFilter(null);
     setSearchFill('');
-  
+
     // 3. 1C click-i bir az gec (0 ms sonra) göndər
     setTimeout(() => {
       document.action_container = `{"filter_${id}": ${JSON.stringify(draftValues)}}`;
@@ -150,13 +150,13 @@ const Filter = ({ id, title, selectedLabel, options, isOpen, setOpenFilter, mult
   // }, [labels, values]);
 
   // Sort options so that the selected item is first (only for single select)
-  const sortedOptions = multiple 
+  const sortedOptions = multiple
     ? options // If multiple, do not change the order
     : options?.sort((a, b) => {
-        if (values?.includes(a.value)) return -1;
-        if (values?.includes(b.value)) return 1;
-        return 0;
-      });
+      if (values?.includes(a.value)) return -1;
+      if (values?.includes(b.value)) return 1;
+      return 0;
+    });
 
   return (
     <div className="filter-container" ref={containerRef}>
@@ -168,10 +168,20 @@ const Filter = ({ id, title, selectedLabel, options, isOpen, setOpenFilter, mult
           {labels?.length ? (
             <div style={{ padding: "14px 0 14px 12px" }} onClick={toggleDropdown}>
               {title}: {
-              multiple ? labels?.length > 1 ? labels?.length : labels[0]?.length > 6 ? `${labels[0].slice(0, 6)}...` : labels[0] 
-              : labels?.length > 6 
-                ? `${labels.slice(0, 8)}...` 
-                : `${labels[0].slice(0, 8)}...`}
+                multiple
+                  ? labels?.length > 1
+                    ? labels?.length
+                    : labels[0]
+                      ? labels[0].length > 6
+                        ? `${labels[0].slice(0, 6)}...`
+                        : labels[0]
+                      : ""
+                  : labels[0]
+                    ? labels[0].length > 6
+                      ? `${labels[0].slice(0, 8)}...`
+                      : labels[0].slice(0, 8)
+                    : ""
+              }
             </div>
           ) : (
             <div style={{ padding: "12px 16px" }} className="flex a-center" onClick={toggleDropdown}>
@@ -186,7 +196,7 @@ const Filter = ({ id, title, selectedLabel, options, isOpen, setOpenFilter, mult
           )}
           {values?.length ? (
             <button
-              onClick={(e) => { clearAll(e); setSearchFill('');clearSearch(e?.target?.id)}}
+              onClick={(e) => { clearAll(e); setSearchFill(''); clearSearch(e?.target?.id) }}
               style={{ cursor: "pointer", paddingRight: "12px" }}
               className="default_btn"
               id={`delete_${title}`}
@@ -209,7 +219,7 @@ const Filter = ({ id, title, selectedLabel, options, isOpen, setOpenFilter, mult
                   handleSearch(newValue); // Pass the latest value to handleSearch
                 }}
               />
-              <button id={`search_clear_${id}`} className="clear_filter" onClick={(e) => {e?.preventDefault();console.log(e?.target?.id);setSearchFill('');clearSearch(e?.target?.id)}}>X</button>
+              <button id={`search_clear_${id}`} className="clear_filter" onClick={(e) => { e?.preventDefault(); console.log(e?.target?.id); setSearchFill(''); clearSearch(e?.target?.id) }}>X</button>
             </form>
           )}
           <div className="filter_types" onScroll={(e) => handleFilterScroll(e, title)}>
@@ -222,7 +232,7 @@ const Filter = ({ id, title, selectedLabel, options, isOpen, setOpenFilter, mult
                 style={{ backgroundColor: !multiple && draftValues?.includes(option.value) ? '#D9EDFC' : '' }}
               >
                 <div className='flex column a-start'>
-                  <p style={{width: "248px", whiteSpace:"nowrap", overflow:"hidden", textOverflow:"ellipsis"}}>{option?.label}</p>
+                  <p style={{ width: "248px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{option?.label}</p>
                   <span className='label2'>{option?.label2}</span>
                 </div>
                 {multiple && (
@@ -267,7 +277,7 @@ const Filter = ({ id, title, selectedLabel, options, isOpen, setOpenFilter, mult
             <div className="flex j-between w-100 types_actions">
               <button
                 className="types_apply types_submit w-50"
-                style={{marginLeft: "16px", marginTop: "8px"}}
+                style={{ marginLeft: "16px", marginTop: "8px" }}
                 onClick={handleApply}
               >
                 Применить

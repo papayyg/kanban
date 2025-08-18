@@ -1,0 +1,19 @@
+.kanban-label--missed {
+    /* Цвета */
+    color: #ff0323;
+    background-color: #ead6d5;
+    /* border: 1px solid #fca5a5; */
+
+    /* Текст */
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 13px !important;
+    letter-spacing: 0.5px;
+
+    /* Обязательные стили для формы */
+    min-height: unset !important;
+    margin-top: 5px;
+    display: inline-block !important;
+    padding: 4px 14px;
+    border-radius: 999px;
+}

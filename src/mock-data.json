@@ -1,0 +1,946 @@
+{
+    "menu": {
+        "show": true,
+        "button": {
+            "value": "e1cib/data/Документ.Сделка?ref=00000000000000000000000000000000",
+            "label": "Новая сделка"
+        },
+        "type": {
+            "value": "Kanban",
+            "label": "Канбан"
+        },
+        "types": [
+            {
+                "value": "Kanban",
+                "label": "Канбан"
+            },
+            {
+                "value": "Spisok",
+                "label": "Список"
+            }
+        ],
+        "search": true,
+        "showFiltersBtn": true,
+        "menuBtn": true,
+        "menuList": [
+            {
+                "value": "voronka",
+                "label": "Воронка",
+                "list": [
+                    {
+                        "checked": true,
+                        "label": "Воронка продаж 2",
+                        "value": "Воронка_Справочник.Ф_ВоронкиПродаж_0007f386-7b8c-11e9-83a8-1cb72cafa0f8"
+                    },
+                    {
+                        "label": "Новая воронка",
+                        "value": "Воронка_Справочник.Ф_ВоронкиПродаж_0e340dc2-6b3f-11f0-9de6-1c98ec2a636d"
+                    },
+                    {
+                        "label": "Гарантия",
+                        "value": "Воронка_Справочник.Ф_ВоронкиПродаж_b5352327-66c2-11ef-a5c9-ac1f6b476fd3"
+                    }
+                ],
+                "button": {
+                    "value": "e1cib/data/Справочник.Ф_ВоронкиПродаж?ref=00000000000000000000000000000000",
+                    "label": "Новая воронка"
+                },
+                "isDropdown": false
+            },
+            {
+                "value": "sort",
+                "label": "Сортировка",
+                "list": [
+                    {
+                        "value": "ascending_order_event_date",
+                        "label": "Сначала старые по дате события"
+                    },
+                    {
+                        "value": "descending_order_event_date",
+                        "label": "Сначала новые по дате события"
+                    },
+                    {
+                        "value": "ascending_order_deal_date",
+                        "label": "Сначала старые по дате сделки",
+                        "checked": true
+                    },
+                    {
+                        "value": "descending_order_deal_date",
+                        "label": "Сначала новые по дате сделки"
+                    },
+                    {
+                        "value": "ascending_order_name",
+                        "label": "По возрастанию ФИО клиента"
+                    },
+                    {
+                        "value": "descending_order_name",
+                        "label": "По убыванию ФИО клиента"
+                    }
+                ],
+                "button": {},
+                "isDropdown": false
+            },
+            {
+                "value": "upload_excel",
+                "label": "Выгрузить в excel",
+                "list": []
+            },
+            {
+                "value": "refresh",
+                "label": "Обновить канбан",
+                "list": []
+            },
+            {
+                "value": "setting_color",
+                "label": "Настройка цвета карточек",
+                "list": []
+            },
+            {
+                "value": "setting_field",
+                "label": "Настройка полей в карточке",
+                "list": []
+            },
+            {
+                "value": "service",
+                "label": "Вызов отладочного меню",
+                "list": []
+            }
+        ],
+        "showManager": null,
+        "showResponsible": null,
+        "startDate": "",
+        "endDate": "",
+        "loader": false
+    },
+    "filters": {
+        "show": true,
+        "filterList": [
+            {
+                "id": "cities",
+                "title": "Города",
+                "selectedValue": "",
+                "selectedLabel": [],
+                "options": [
+                    {
+                        "value": "9da5f417-5f93-11ef-a5c9-ac1f6b476fd3",
+                        "label": "Саранск"
+                    },
+                    {
+                        "value": "ecb2d74f-f5d3-11ef-9de4-1c98ec2a636d",
+                        "label": "Тюмень"
+                    }
+                ],
+                "multiple": true,
+                "search": true,
+                "loader": false
+            },
+            {
+                "id": "projects",
+                "title": "Проекты",
+                "selectedValue": "",
+                "selectedLabel": [],
+                "options": [
+                    {
+                        "value": "e73fc04b-6053-11ef-a5c9-ac1f6b476fd3",
+                        "label": "На Кирова"
+                    },
+                    {
+                        "value": "23f9b28d-6054-11ef-a5c9-ac1f6b476fd3",
+                        "label": "Розмарин"
+                    },
+                    {
+                        "value": "29629637-6054-11ef-a5c9-ac1f6b476fd3",
+                        "label": "Семейный бульвар"
+                    }
+                ],
+                "multiple": true,
+                "search": true,
+                "loader": false
+            },
+            {
+                "id": "clients",
+                "title": "Клиенты",
+                "selectedValue": "",
+                "selectedLabel": [],
+                "options": [
+                    {
+                        "value": "e8d50688-b141-11ef-a5cd-ac1f6b476fd3",
+                        "label": "Broken"
+                    },
+                    {
+                        "value": "37eaa848-b155-11ef-a5cd-ac1f6b476fd3",
+                        "label": "Broken"
+                    },
+                    {
+                        "value": "460d8f5a-b167-11ef-a5cd-ac1f6b476fd3",
+                        "label": "Broken"
+                    },
+                    {
+                        "value": "026bf639-c0da-11ef-a5cd-ac1f6b476fd3",
+                        "label": "Dmitriy",
+                        "label2": "9065301911"
+                    },
+                    {
+                        "value": "51fc29cf-d548-11ef-a5cd-ac1f6b476fd3",
+                        "label": "Gasan",
+                        "label2": "9880902009"
+                    },
+                    {
+                        "value": "d6b5dff9-c97e-11ef-a5cd-ac1f6b476fd3",
+                        "label": "Marusik",
+                        "label2": "9029097073"
+                    },
+                    {
+                        "value": "27bcd824-c1c5-11ef-a5cd-ac1f6b476fd3",
+                        "label": "Test"
+                    },
+                    {
+                        "value": "77cd14aa-c1c7-11ef-a5cd-ac1f6b476fd3",
+                        "label": "Test",
+                        "label2": "9081231231"
+                    },
+                    {
+                        "value": "f0242e2c-bea4-11ef-a5cd-ac1f6b476fd3",
+                        "label": "test",
+                        "label2": "9220052101"
+                    },
+                    {
+                        "value": "b7c4defa-9d08-11ef-a5cd-ac1f6b476fd3",
+                        "label": "Test",
+                        "label2": "1231231231"
+                    }
+                ],
+                "multiple": true,
+                "search": true,
+                "loader": false
+            },
+            {
+                "id": "users",
+                "title": "Менеджеры",
+                "selectedValue": "",
+                "selectedLabel": [],
+                "options": [
+                    {
+                        "value": "43831327-adf3-11ed-a5c3-ac1f6b476fd3",
+                        "label": "4Dev"
+                    },
+                    {
+                        "value": "43831326-adf3-11ed-a5c3-ac1f6b476fd3",
+                        "label": "API"
+                    },
+                    {
+                        "value": "4e80ffc7-6abb-11ef-a5c9-ac1f6b476fd3",
+                        "label": "Борисова Анастасия Николаевна"
+                    },
+                    {
+                        "value": "c8d519a1-3837-11ef-a5c9-ac1f6b476fd3",
+                        "label": "Волкова Татьяна Михайловна"
+                    },
+                    {
+                        "value": "5a8b9478-b86a-11ef-a5cd-ac1f6b476fd3",
+                        "label": "Капусткина Диана Владимировна"
+                    },
+                    {
+                        "value": "f58cb762-6aba-11ef-a5c9-ac1f6b476fd3",
+                        "label": "Мальцева Марина Сергеевна"
+                    },
+                    {
+                        "value": "a84ea7ce-4fd6-11ef-a5c9-ac1f6b476fd3",
+                        "label": "Рамаева Евгения Александровна"
+                    },
+                    {
+                        "value": "88c836d0-368b-11f0-9de6-1c98ec2a636d",
+                        "label": "Ренар"
+                    },
+                    {
+                        "value": "f918e136-a357-11ef-a5cd-ac1f6b476fd3",
+                        "label": "сайт"
+                    },
+                    {
+                        "value": "bc185b2d-9fe4-11ef-a5cd-ac1f6b476fd3",
+                        "label": "Серикова Валерия Сергеевна"
+                    }
+                ],
+                "multiple": true,
+                "search": true,
+                "loader": false
+            },
+            {
+                "id": "channels",
+                "title": "Каналы",
+                "selectedValue": "",
+                "selectedLabel": [],
+                "options": [
+                    {
+                        "value": "4aacb8cb-adf3-11ed-a5c3-ac1f6b476fd3",
+                        "label": "Callibri"
+                    },
+                    {
+                        "value": "4aacb8c9-adf3-11ed-a5c3-ac1f6b476fd3",
+                        "label": "CallTouch"
+                    },
+                    {
+                        "value": "f37cf43a-7b8b-11e9-83a8-1cb72cafa0f8",
+                        "label": "CoMagic"
+                    },
+                    {
+                        "value": "4aacb8ca-adf3-11ed-a5c3-ac1f6b476fd3",
+                        "label": "Roistat"
+                    },
+                    {
+                        "value": "f37cf438-7b8b-11e9-83a8-1cb72cafa0f8",
+                        "label": "Агентство недвижимости"
+                    },
+                    {
+                        "value": "087c1fcf-7b8e-11e9-83a8-1cb72cafa0f8",
+                        "label": "Акция"
+                    },
+                    {
+                        "value": "f37cf439-7b8b-11e9-83a8-1cb72cafa0f8",
+                        "label": "Без указания источника"
+                    },
+                    {
+                        "value": "e2bf1f81-b140-11ef-a5cd-ac1f6b476fd3",
+                        "label": "ВК Реклама"
+                    },
+                    {
+                        "value": "087c1fd1-7b8e-11e9-83a8-1cb72cafa0f8",
+                        "label": "Рекомендация клиента"
+                    },
+                    {
+                        "value": "087c1fd2-7b8e-11e9-83a8-1cb72cafa0f8",
+                        "label": "Рекомендация сотрудника"
+                    }
+                ],
+                "multiple": true,
+                "search": true,
+                "loader": false
+            },
+            {
+                "id": "sources",
+                "title": "Источники",
+                "selectedValue": "",
+                "selectedLabel": [],
+                "options": [
+                    {
+                        "value": "87b659b9-7588-11ef-a5cc-ac1f6b476fd3",
+                        "label": "Авито"
+                    },
+                    {
+                        "value": "e675272d-b141-11ef-a5cd-ac1f6b476fd3",
+                        "label": "Вконтакте lead ad (367704)"
+                    },
+                    {
+                        "value": "b79ce4b6-bd3f-11ef-a5cd-ac1f6b476fd3",
+                        "label": "Звонок с сайта"
+                    },
+                    {
+                        "value": "aca0b748-d253-11ef-a5cd-ac1f6b476fd3",
+                        "label": "Личный кабинет риелтора"
+                    },
+                    {
+                        "value": "ce8c3153-bc77-11ef-a5cd-ac1f6b476fd3",
+                        "label": "Наружная реклама (билборд)"
+                    },
+                    {
+                        "value": "0fae2d18-605d-11ef-a5c9-ac1f6b476fd3",
+                        "label": "Наружная рекламе на объекте строительства "
+                    },
+                    {
+                        "value": "e4431f05-31f7-11ef-a5c9-ac1f6b476fd3",
+                        "label": "Прямые переходы на сайт"
+                    },
+                    {
+                        "value": "07801796-605d-11ef-a5c9-ac1f6b476fd3",
+                        "label": "Радио "
+                    },
+                    {
+                        "value": "147a41da-605d-11ef-a5c9-ac1f6b476fd3",
+                        "label": "Реклама в интернете"
+                    },
+                    {
+                        "value": "0bd0ed22-605d-11ef-a5c9-ac1f6b476fd3",
+                        "label": "Реклама в СБ"
+                    }
+                ],
+                "multiple": true,
+                "search": true,
+                "loader": false
+            },
+            {
+                "id": "event_timeline",
+                "title": "События",
+                "selectedValue": "",
+                "selectedLabel": [
+                    {
+                        "value": "3",
+                        "label": null
+                    }
+                ],
+                "options": [
+                    {
+                        "value": "0",
+                        "label": "Cделки без активных событий"
+                    },
+                    {
+                        "value": "1",
+                        "label": "Сделки с событиями на сегодня"
+                    },
+                    {
+                        "value": "2",
+                        "label": "Сделки с просроченными событиями"
+                    },
+                    {
+                        "value": "3",
+                        "label": "Сделки с пропущенными звонками"
+                    }
+                ],
+                "multiple": false,
+                "search": false,
+                "loader": false
+            },
+            {
+                "id": "stages_id",
+                "title": "Этапы",
+                "selectedValue": "",
+                "selectedLabel": [
+                    {
+                        "value": "2f66f08c-2462-11ec-84c8-0025903468f4",
+                        "label": "Не удачно"
+                    }
+                ],
+                "options": [
+                    {
+                        "value": "2f66f08c-2462-11ec-84c8-0025903468f4",
+                        "label": "Не удачно"
+                    },
+                    {
+                        "value": "1be1ace7-2462-11ec-84c8-0025903468f4",
+                        "label": "Новый лид"
+                    },
+                    {
+                        "value": "087c21bc-7b8e-11e9-83a8-1cb72cafa0f8",
+                        "label": "Квалификация лида"
+                    },
+                    {
+                        "value": "087c21b8-7b8e-11e9-83a8-1cb72cafa0f8",
+                        "label": "Назначена встреча"
+                    },
+                    {
+                        "value": "087c21b6-7b8e-11e9-83a8-1cb72cafa0f8",
+                        "label": "Встреча проведена"
+                    },
+                    {
+                        "value": "eec71052-2461-11ec-84c8-0025903468f4",
+                        "label": "Назначена дата сделки"
+                    },
+                    {
+                        "value": "087c21be-7b8e-11e9-83a8-1cb72cafa0f8",
+                        "label": "Сделка проведена"
+                    },
+                    {
+                        "value": "087c21c3-7b8e-11e9-83a8-1cb72cafa0f8",
+                        "label": "Сделка зарегистрирована"
+                    },
+                    {
+                        "value": "087c21c0-7b8e-11e9-83a8-1cb72cafa0f8",
+                        "label": "Поступила полная оплата"
+                    },
+                    {
+                        "value": "2f66f08b-2462-11ec-84c8-0025903468f4",
+                        "label": "Сделка завершена"
+                    }
+                ],
+                "multiple": true,
+                "search": true,
+                "loader": false
+            }
+        ]
+    },
+    "board": [
+        {
+            "id": "stage_id_2f66f08c-2462-11ec-84c8-0025903468f4",
+            "title": "Не удачно",
+            "borderColor": "#808080",
+            "dealAmount": 73,
+            "costAmount": 4427400,
+            "deals": [
+                {
+                    "date": "22.08.24 08:19",
+                    "name": "№26 от 22.08.24",
+                    "step": "Не удачно",
+                    "more": [
+                        {
+                            "styleType": "missed",
+                            "label": "ПРОПУЩЕН",
+                            "value": "Состояние звонка"
+                        }
+                    ],
+                    "id": "1c064d65-6046-11ef-a5c9-ac1f6b476fd3",
+                    "href": "e1cib/data/Документ.Сделка?ref=a5c9ac1f6b476fd311ef60461c064d65",
+                    "color": "#",
+                    "task_color": "red",
+                    "task_actions": [],
+                    "call_actions": [
+                        {
+                            "value": "ats_types_Ростелеком",
+                            "label": "Ростелеком"
+                        },
+                        {
+                            "value": "ats_types_Мегафон",
+                            "label": "Мегафон"
+                        }
+                    ],
+                    "add_actions": [
+                        {
+                            "value": "events_types_29ffcfdb-7e08-11e9-aa54-000d3a2709a2",
+                            "label": "Исходящий звонок"
+                        },
+                        {
+                            "value": "events_types_ccd915d4-24e9-11ec-84c8-0025903468f4",
+                            "label": "Встреча"
+                        }
+                    ],
+                    "messenger_actions": [
+                        {
+                            "value": "messenger_SMS",
+                            "label": "SMS"
+                        }
+                    ],
+                    "mail_actions": [],
+                    "border": "#808080"
+                },
+                {
+                    "date": "22.08.24 13:38",
+                    "name": "№39 от 22.08.24",
+                    "step": "Не удачно",
+                    "more": [
+                        {
+                            "styleType": "missed",
+                            "label": "ПРОПУЩЕН",
+                            "value": "Состояние звонка"
+                        }
+                    ],
+                    "id": "9ef3d98c-6072-11ef-a5c9-ac1f6b476fd3",
+                    "href": "e1cib/data/Документ.Сделка?ref=a5c9ac1f6b476fd311ef60729ef3d98c",
+                    "color": "#",
+                    "task_color": "red",
+                    "task_actions": [],
+                    "call_actions": [
+                        {
+                            "value": "ats_types_Ростелеком",
+                            "label": "Ростелеком"
+                        },
+                        {
+                            "value": "ats_types_Мегафон",
+                            "label": "Мегафон"
+                        }
+                    ],
+                    "add_actions": [
+                        {
+                            "value": "events_types_29ffcfdb-7e08-11e9-aa54-000d3a2709a2",
+                            "label": "Исходящий звонок"
+                        },
+                        {
+                            "value": "events_types_ccd915d4-24e9-11ec-84c8-0025903468f4",
+                            "label": "Встреча"
+                        }
+                    ],
+                    "messenger_actions": [
+                        {
+                            "value": "messenger_SMS",
+                            "label": "SMS"
+                        }
+                    ],
+                    "mail_actions": [],
+                    "border": "#808080"
+                },
+                {
+                    "date": "22.08.24 14:59",
+                    "name": "№41 от 22.08.24",
+                    "step": "Не удачно",
+                    "more": [
+                        {
+                            "styleType": "missed",
+                            "label": "ПРОПУЩЕН",
+                            "value": "Состояние звонка"
+                        }
+                    ],
+                    "id": "f0fe91f1-607d-11ef-a5c9-ac1f6b476fd3",
+                    "href": "e1cib/data/Документ.Сделка?ref=a5c9ac1f6b476fd311ef607df0fe91f1",
+                    "color": "#",
+                    "task_color": "red",
+                    "task_actions": [],
+                    "call_actions": [
+                        {
+                            "value": "ats_types_Ростелеком",
+                            "label": "Ростелеком"
+                        },
+                        {
+                            "value": "ats_types_Мегафон",
+                            "label": "Мегафон"
+                        }
+                    ],
+                    "add_actions": [
+                        {
+                            "value": "events_types_29ffcfdb-7e08-11e9-aa54-000d3a2709a2",
+                            "label": "Исходящий звонок"
+                        },
+                        {
+                            "value": "events_types_ccd915d4-24e9-11ec-84c8-0025903468f4",
+                            "label": "Встреча"
+                        }
+                    ],
+                    "messenger_actions": [
+                        {
+                            "value": "messenger_SMS",
+                            "label": "SMS"
+                        }
+                    ],
+                    "mail_actions": [],
+                    "border": "#808080"
+                },
+                {
+                    "date": "26.08.24 18:00",
+                    "name": "№91 от 26.08.24",
+                    "step": "Не удачно",
+                    "tasks": 1,
+                    "more": [
+                        {
+                            "styleType": "missed",
+                            "label": "ПРОПУЩЕН",
+                            "value": "Состояние звонка"
+                        }
+                    ],
+                    "id": "df2115e8-63bb-11ef-a5c9-ac1f6b476fd3",
+                    "href": "e1cib/data/Документ.Сделка?ref=a5c9ac1f6b476fd311ef63bbdf2115e8",
+                    "color": "#",
+                    "task_color": "red",
+                    "task_actions": [
+                        {
+                            "id": "72010451-7005-11ef-a5cc-ac1f6b476fd3",
+                            "name": "11.09.2024 9:16:57",
+                            "task_num": 1,
+                            "type_event": "outgoing_call",
+                            "type_name_event": "Исходящий звонок",
+                            "name_client": "Васильев Максим Андреевич",
+                            "checked": false
+                        }
+                    ],
+                    "call_actions": [
+                        {
+                            "value": "ats_types_Ростелеком",
+                            "label": "Ростелеком"
+                        },
+                        {
+                            "value": "ats_types_Мегафон",
+                            "label": "Мегафон"
+                        }
+                    ],
+                    "add_actions": [
+                        {
+                            "value": "events_types_29ffcfdb-7e08-11e9-aa54-000d3a2709a2",
+                            "label": "Исходящий звонок"
+                        },
+                        {
+                            "value": "events_types_ccd915d4-24e9-11ec-84c8-0025903468f4",
+                            "label": "Встреча"
+                        }
+                    ],
+                    "messenger_actions": [
+                        {
+                            "value": "messenger_SMS",
+                            "label": "SMS"
+                        }
+                    ],
+                    "mail_actions": [],
+                    "border": "#808080"
+                },
+                {
+                    "date": "29.08.24 18:07",
+                    "name": "№123 от 29.08.24",
+                    "step": "Не удачно",
+                    "more": [
+                        {
+                            "styleType": "missed",
+                            "label": "ПРОПУЩЕН",
+                            "value": "Состояние звонка"
+                        }
+                    ],
+                    "id": "7bf26d9b-6618-11ef-a5c9-ac1f6b476fd3",
+                    "href": "e1cib/data/Документ.Сделка?ref=a5c9ac1f6b476fd311ef66187bf26d9b",
+                    "color": "#",
+                    "task_color": "red",
+                    "task_actions": [],
+                    "call_actions": [
+                        {
+                            "value": "ats_types_Ростелеком",
+                            "label": "Ростелеком"
+                        },
+                        {
+                            "value": "ats_types_Мегафон",
+                            "label": "Мегафон"
+                        }
+                    ],
+                    "add_actions": [
+                        {
+                            "value": "events_types_29ffcfdb-7e08-11e9-aa54-000d3a2709a2",
+                            "label": "Исходящий звонок"
+                        },
+                        {
+                            "value": "events_types_ccd915d4-24e9-11ec-84c8-0025903468f4",
+                            "label": "Встреча"
+                        }
+                    ],
+                    "messenger_actions": [
+                        {
+                            "value": "messenger_SMS",
+                            "label": "SMS"
+                        }
+                    ],
+                    "mail_actions": [],
+                    "border": "#808080"
+                },
+                {
+                    "date": "03.09.24 13:22",
+                    "name": "№173 от 03.09.24",
+                    "step": "Не удачно",
+                    "tasks": 1,
+                    "more": [
+                        {
+                            "styleType": "missed",
+                            "label": "ПРОПУЩЕН",
+                            "value": "Состояние звонка"
+                        }
+                    ],
+                    "id": "6de5beb3-69de-11ef-a5c9-ac1f6b476fd3",
+                    "href": "e1cib/data/Документ.Сделка?ref=a5c9ac1f6b476fd311ef69de6de5beb3",
+                    "color": "#",
+                    "task_color": "red",
+                    "task_actions": [
+                        {
+                            "id": "d550a7d8-7588-11ef-a5cc-ac1f6b476fd3",
+                            "name": "19.09.2024 11:33:00",
+                            "task_num": 1,
+                            "type_event": "calendar",
+                            "type_name_event": "Задача",
+                            "name_client": "Михаил",
+                            "checked": false
+                        }
+                    ],
+                    "call_actions": [
+                        {
+                            "value": "ats_types_Ростелеком",
+                            "label": "Ростелеком"
+                        },
+                        {
+                            "value": "ats_types_Мегафон",
+                            "label": "Мегафон"
+                        }
+                    ],
+                    "add_actions": [
+                        {
+                            "value": "events_types_29ffcfdb-7e08-11e9-aa54-000d3a2709a2",
+                            "label": "Исходящий звонок"
+                        },
+                        {
+                            "value": "events_types_ccd915d4-24e9-11ec-84c8-0025903468f4",
+                            "label": "Встреча"
+                        }
+                    ],
+                    "messenger_actions": [
+                        {
+                            "value": "messenger_SMS",
+                            "label": "SMS"
+                        }
+                    ],
+                    "mail_actions": [],
+                    "border": "#808080"
+                },
+                {
+                    "date": "03.09.24 13:24",
+                    "name": "№174 от 03.09.24",
+                    "step": "Не удачно",
+                    "more": [
+                        {
+                            "styleType": "missed",
+                            "label": "ПРОПУЩЕН",
+                            "value": "Состояние звонка"
+                        }
+                    ],
+                    "id": "ba87571d-69de-11ef-a5c9-ac1f6b476fd3",
+                    "href": "e1cib/data/Документ.Сделка?ref=a5c9ac1f6b476fd311ef69deba87571d",
+                    "color": "#",
+                    "task_color": "red",
+                    "task_actions": [],
+                    "call_actions": [
+                        {
+                            "value": "ats_types_Ростелеком",
+                            "label": "Ростелеком"
+                        },
+                        {
+                            "value": "ats_types_Мегафон",
+                            "label": "Мегафон"
+                        }
+                    ],
+                    "add_actions": [
+                        {
+                            "value": "events_types_29ffcfdb-7e08-11e9-aa54-000d3a2709a2",
+                            "label": "Исходящий звонок"
+                        },
+                        {
+                            "value": "events_types_ccd915d4-24e9-11ec-84c8-0025903468f4",
+                            "label": "Встреча"
+                        }
+                    ],
+                    "messenger_actions": [
+                        {
+                            "value": "messenger_SMS",
+                            "label": "SMS"
+                        }
+                    ],
+                    "mail_actions": [],
+                    "border": "#808080"
+                },
+                {
+                    "date": "04.09.24 16:42",
+                    "name": "№208 от 04.09.24",
+                    "step": "Не удачно",
+                    "more": [
+                        {
+                            "styleType": "missed",
+                            "label": "ПРОПУЩЕН",
+                            "value": "Состояние звонка"
+                        }
+                    ],
+                    "id": "75fcf07a-6ac3-11ef-a5c9-ac1f6b476fd3",
+                    "href": "e1cib/data/Документ.Сделка?ref=a5c9ac1f6b476fd311ef6ac375fcf07a",
+                    "color": "#",
+                    "task_color": "red",
+                    "task_actions": [],
+                    "call_actions": [
+                        {
+                            "value": "ats_types_Ростелеком",
+                            "label": "Ростелеком"
+                        },
+                        {
+                            "value": "ats_types_Мегафон",
+                            "label": "Мегафон"
+                        }
+                    ],
+                    "add_actions": [
+                        {
+                            "value": "events_types_29ffcfdb-7e08-11e9-aa54-000d3a2709a2",
+                            "label": "Исходящий звонок"
+                        },
+                        {
+                            "value": "events_types_ccd915d4-24e9-11ec-84c8-0025903468f4",
+                            "label": "Встреча"
+                        }
+                    ],
+                    "messenger_actions": [
+                        {
+                            "value": "messenger_SMS",
+                            "label": "SMS"
+                        }
+                    ],
+                    "mail_actions": [],
+                    "border": "#808080"
+                },
+                {
+                    "date": "07.09.24 13:10",
+                    "name": "№252 от 07.09.24",
+                    "step": "Не удачно",
+                    "more": [
+                        {
+                            "styleType": "missed",
+                            "label": "ПРОПУЩЕН",
+                            "value": "Состояние звонка"
+                        }
+                    ],
+                    "id": "69abf879-6d01-11ef-a5c9-ac1f6b476fd3",
+                    "href": "e1cib/data/Документ.Сделка?ref=a5c9ac1f6b476fd311ef6d0169abf879",
+                    "color": "#",
+                    "task_color": "red",
+                    "task_actions": [],
+                    "call_actions": [
+                        {
+                            "value": "ats_types_Ростелеком",
+                            "label": "Ростелеком"
+                        },
+                        {
+                            "value": "ats_types_Мегафон",
+                            "label": "Мегафон"
+                        }
+                    ],
+                    "add_actions": [
+                        {
+                            "value": "events_types_29ffcfdb-7e08-11e9-aa54-000d3a2709a2",
+                            "label": "Исходящий звонок"
+                        },
+                        {
+                            "value": "events_types_ccd915d4-24e9-11ec-84c8-0025903468f4",
+                            "label": "Встреча"
+                        }
+                    ],
+                    "messenger_actions": [
+                        {
+                            "value": "messenger_SMS",
+                            "label": "SMS"
+                        }
+                    ],
+                    "mail_actions": [],
+                    "border": "#808080"
+                },
+                {
+                    "date": "09.09.24 13:11",
+                    "name": "№272 от 09.09.24",
+                    "step": "Не удачно",
+                    "more": [
+                        {
+                            "styleType": "missed",
+                            "label": "ПРОПУЩЕН",
+                            "value": "Состояние звонка"
+                        }
+                    ],
+                    "id": "e8b18ca2-6e93-11ef-a5cc-ac1f6b476fd3",
+                    "href": "e1cib/data/Документ.Сделка?ref=a5ccac1f6b476fd311ef6e93e8b18ca2",
+                    "color": "#",
+                    "task_color": "red",
+                    "task_actions": [],
+                    "call_actions": [
+                        {
+                            "value": "ats_types_Ростелеком",
+                            "label": "Ростелеком"
+                        },
+                        {
+                            "value": "ats_types_Мегафон",
+                            "label": "Мегафон"
+                        }
+                    ],
+                    "add_actions": [
+                        {
+                            "value": "events_types_29ffcfdb-7e08-11e9-aa54-000d3a2709a2",
+                            "label": "Исходящий звонок"
+                        },
+                        {
+                            "value": "events_types_ccd915d4-24e9-11ec-84c8-0025903468f4",
+                            "label": "Встреча"
+                        }
+                    ],
+                    "messenger_actions": [
+                        {
+                            "value": "messenger_SMS",
+                            "label": "SMS"
+                        }
+                    ],
+                    "mail_actions": [],
+                    "border": "#808080"
+                }
+            ],
+            "loader": false
+        }
+    ],
+    "list": [],
+    "loader": false
+}

@@ -3,6 +3,8 @@ import Components from './components/Components';
 import { useOneCApi } from './hooks/useOneCApi';
 import './App.css';
 
+// import mockData from './mock-data.json';
+
 const getUpdatedStateForTaskToggle = (prevState, boardId, dealId, taskId) => {
   const newBoard = (prevState.board || []).map(boardElem => {
     if (boardElem.id !== boardId) return boardElem;
@@ -41,6 +43,8 @@ const getUpdatedStateForDrag = (prevState, dragEnter, dragOut) => {
   return { ...prevState, board: newBoard };
 };
 
+// const IS_DEV_MODE = process.env.NODE_ENV === 'development';
+
 function App() {
   const [data, setData] = useState({});
   const [dragEnter, setDragEnter] = useState(null);
@@ -49,10 +53,35 @@ function App() {
 
   useOneCApi(
     setData,
-    setDragEnter,
     () => dragEnter,
     () => dragOut
   );
+
+
+  // useEffect(() => {
+  //   if (IS_DEV_MODE) {
+  //     setData(prev => ({ ...prev, menu: mockData.menu, filters: mockData.filters }));
+
+  //     const timerColumns = setTimeout(() => {
+  //       const columnsOnly = mockData.board.map(({ id, title, borderColor }) => ({
+  //         id,
+  //         title,
+  //         borderColor,
+  //         deals: [],
+  //       }));
+  //       setData(prev => ({ ...prev, board: columnsOnly }));
+  //     }, 500);
+
+  //     const timerDeals = setTimeout(() => {
+  //       setData({ ...mockData, isLoading: false });
+  //     }, 1500);
+
+  //     return () => {
+  //       clearTimeout(timerColumns);
+  //       clearTimeout(timerDeals);
+  //     };
+  //   }
+  // }, []);
 
   const handleDragEnd = useCallback(() => {
     setData(prevState => getUpdatedStateForDrag(prevState, dragEnter, dragOut));

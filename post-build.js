@@ -48,7 +48,7 @@ try {
     }
 
     const date = new Date();
-    const dateString = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+    const dateString = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}_${String(date.getHours()).padStart(2, '0')}-${String(date.getMinutes()).padStart(2, '0')}`;
 
     const newFileName = `${path.parse(htmlFileName).name}-${dateString}${path.parse(htmlFileName).ext}`;
     const newFilePath = path.join(distDir, newFileName);

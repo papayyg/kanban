@@ -1,70 +1,92 @@
-# Getting Started with Create React App
+# Канбан-доска для 1С на React
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Этот проект представляет собой интерактивную канбан-доску, разработанную на React для встраивания и использования внутри платформы 1С. Приложение компилируется в единый HTML-файл со всеми стилями и скриптами для легкой интеграции.
 
-## Available Scripts
+***
 
-In the project directory, you can run:
+## ⚙️ Технологический стек
 
-### `npm start`
+* **React.js**: Основная библиотека для построения пользовательского интерфейса.
+* **JavaScript (ES6+)**: Язык программирования.
+* **CSS3**: Стилизация компонентов.
+* **Node.js / npm**: Для управления зависимостями и запуска скриптов.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+***
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 🏗️ Архитектура и логика загрузки
 
-### `npm test`
+Особенностью проекта является его работа внутри 1С, что накладывает определенные требования к архитектуре.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Взаимодействие с 1С
 
-### `npm run build`
+1.  **Единый файл**: Весь React-проект собирается в один `index.html` файл. 1С загружает этот файл в свое поле HTML-документа, которое использует движок **WebKit**.
+2.  **Мост через `document`**: Обмен данными между 1С и React-приложением происходит через глобальные функции, которые React "вешает" на объект `document`. 1С вызывает эти функции, передавая данные в формате JSON-строки. Основной хаб для этой логики находится в хуке `useOneCApi.js`.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Поэтапная загрузка интерфейса
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Для улучшения пользовательского опыта реализована трехэтапная загрузка канбан-доски:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1.  **Шапка (Navigations)**: Сразу после открытия отображается статичная шапка с элементами управления. Она не ждет загрузки данных.
+2.  **Отрисовка колонок**: 1С вызывает метод `document.setBoardColumns(json)`, передавая структуру колонок (ID, название, цвет). На экране появляются пустые колонки с заголовками и правильными цветами. На этом этапе поверх колонок отображается полупрозрачный прелоадер.
+3.  **Загрузка данных**: 1С вызывает метод `document.setBoardData(json)`, передавая все остальные данные (сделки, меню, фильтры). Сделки распределяются по своим колонкам, после чего прелоадер плавно исчезает.
 
-### `npm run eject`
+***
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## 👨‍💻 Локальная разработка и тестирование
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Для удобной разработки и тестирования интерфейса без подключения к 1С в проекте предусмотрен режим локальной разработки.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Как это работает?
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Режим **включается автоматически**, когда вы запускаете проект командой `npm start`. В файле `src/App.js` есть константа `IS_DEV_MODE`, которая проверяет системную переменную `process.env.NODE_ENV`.
 
-## Learn More
+* При запуске через `npm start`, она равна `'development'`, и приложение использует локальные данные.
+* При сборке через `npm run build`, она равна `'production'`, и приложение готово к работе с 1С.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Использование
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+1.  **Тестовые данные**: Все данные для локального тестирования находятся в файле:
+    ```
+    src/mock-data.json
+    ```
+    Вы можете изменять этот файл, чтобы тестировать различные сценарии отображения данных (разное количество колонок, сделок, задач и т.д.).
 
-### Code Splitting
+2.  **Имитация загрузки**: В файле `src/App.js` специальный `useEffect` (раскомментируйте для тестирования) имитирует поэтапную загрузку данных из `mock-data.json` (импорт также раскомментируйте) с помощью `setTimeout`. Это позволяет вам видеть тот же процесс загрузки (шапка -> пустые колонки с прелоадером -> полные данные), который увидит конечный пользователь в 1С.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+***
 
-### Analyzing the Bundle Size
+## ⚡️ Основные скрипты
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+* **Установка зависимостей:**
+    ```bash
+    npm install
+    ```
 
-### Making a Progressive Web App
+* **Запуск в режиме локальной разработки:**
+    (Использует данные из `src/mock-data.json`)
+    ```bash
+    npm start
+    ```
+    Приложение откроется по адресу `http://localhost:3000`.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+* **Сборка для 1С:**
+    (Создает оптимизированный `index.html` в папке `dist`)
+    ```bash
+    npm run build
+    ```
 
-### Advanced Configuration
+***
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## 🔄 Ключевые функции для 1С
 
-### Deployment
+Для корректной работы 1С-разработчику необходимо вызывать следующие глобальные JavaScript функции:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+* `document.setBoardColumns(jsonString)`
+    * **Назначение**: Первичная инициализация доски. Создает пустые колонки.
+    * **Параметр**: JSON-строка с массивом объектов, где каждый объект — это колонка (`{id, title, borderColor}`).
 
-### `npm run build` fails to minify
+* `document.setBoardData(jsonString)`
+    * **Назначение**: Полная загрузка данных. Заполняет колонки сделками, загружает меню и фильтры, убирает прелоадер.
+    * **Параметр**: JSON-строка с полной структурой данных (`{ menu, filters, board, ... }`).
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+* *Другие функции* (`setElem`, `setFilter` и т.д.) используются для частичных обновлений данных уже после основной загрузки.
