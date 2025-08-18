@@ -1,12 +1,34 @@
-import React, { useEffect, useState, useRef, useLayoutEffect, useCallback } from 'react';
-import ListElem from './ListElem/ListElem';
+import React, { useEffect, useState, useRef, useLayoutEffect } from 'react';
+import ListElem from './ListElem';
 import Loader from '../Loader';
+import { useLegacyDataBridge } from '../../hooks/useLegacyDataBridge';
+import { useInfiniteScroll } from '../../hooks/useInfiniteScroll';
 
 const List = ({ menu, filters, board, list, setData, showFiltersBtn, loader2 }) => {
   const [titles, setTitles] = useState([]);
+  const tableRef = useRef(null);
+
+  useLegacyDataBridge(setData, list);
+
+  const { isLoadingMore, handleScroll, onDataLoaded } = useInfiniteScroll(() => {
+    document.getElementById('scrollAction_spisok').click();
+  });
+
+  const handleRowClick = (href) => {
+    document.action_container = `${href}`;
+    document.getElementById("action_trigger_main").click();
+  };
+
+  useEffect(() => {
+    setTitles(list?.titles);
+  }, [list?.titles]);
+
+  useEffect(() => {
+    onDataLoaded();
+  }, [list?.elements, onDataLoaded]);
+
   const titlesRef = useRef(null);
   const [titlesHeight, setTitlesHeight] = useState('auto');
-  const [isLoadingMore, setIsLoadingMore] = useState(false);
 
   const updateHeight = () => {
     if (!titlesRef.current) return;
@@ -21,45 +43,11 @@ const List = ({ menu, filters, board, list, setData, showFiltersBtn, loader2 }) 
     return () => window.removeEventListener('resize', updateHeight);
   }, [loader2, filters?.show, list?.length]);
 
-  useEffect(() => {
-    setTitles(list?.titles);
-  }, [list?.titles]);
-
-  useEffect(() => {
-    if (isLoadingMore) {
-      setIsLoadingMore(false);
-    }
-  }, [list?.elements]);
-
-  document.setTitles = (array) => {
-    setData({ menu, filters, board, list: { ...list, titles: JSON.parse(array) } });
-  };
-
-  document.setElements = (array) => {
-    setData({ menu, filters, board, list: { ...list, elements: JSON.parse(array) } });
-  };
-
-  document.setList = (array) => {
-    setData({ menu, filters, board, list: { ...list, elements: [...list.elements, ...JSON.parse(array)] } });
-  }
-
-  const handleFilterScroll = useCallback((e) => {
-    const target = e.target;
-    const isAtBottom = target.scrollTop + target.clientHeight >= target.scrollHeight - 10;
-
-    if (isAtBottom && !isLoadingMore) {
-      setIsLoadingMore(true);
-      setTimeout(() => {
-        document.getElementById('scrollAction_spisok').click();
-      }, 100);
-    }
-  }, [isLoadingMore]);
-
   return (
     <div style={{ position: 'relative', height: showFiltersBtn ? '85vh' : '90vh' }}>
       {loader2 && <Loader />}
-      <div style={{ maxHeight: '100%', overflowY: 'auto' }} onScroll={handleFilterScroll}>
-        <table className='list' ref={titlesRef} style={{
+      <div style={{ maxHeight: '100%', overflowY: 'auto' }} onScroll={handleScroll}>
+        <table className='list' ref={tableRef} style={{
           ...(loader2 ? { opacity: 0.5 } : {}),
           height: titlesHeight,
           overflowY: 'hidden',
@@ -74,7 +62,9 @@ const List = ({ menu, filters, board, list, setData, showFiltersBtn, loader2 }) 
             </tr>
           </thead>
           <tbody className='list_values'>
-            {list?.elements?.map((elem) => <ListElem elem={elem} key={elem.id} />)}
+            {list?.elements?.map((elem) => (
+              <ListElem elem={elem} key={elem.id} onRowClick={handleRowClick} />
+            ))}
             {isLoadingMore && (
               <tr>
                 <td colSpan={titles?.length || 1} style={{ textAlign: 'center', border: 'none', padding: '20px' }}>
