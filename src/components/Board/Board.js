@@ -8,9 +8,7 @@ const Board = ({ columns, board, filters, setSelectedTask, loader2, setDragEnter
 
   const updateHeight = () => {
     if (!titlesRef.current) return;
-    // Получаем расстояние от контейнера до верха окна
     const topOffset = titlesRef.current.getBoundingClientRect().top;
-    // Считаем доступную высоту
     const available = window.innerHeight - topOffset;
     setTitlesHeight(available + 'px');
   };
@@ -33,7 +31,8 @@ const Board = ({ columns, board, filters, setSelectedTask, loader2, setDragEnter
             ...(loader2 ? { opacity: 0.5 } : {}),
             height: titlesHeight,
             overflowY: 'hidden',
-            overflowX: 'auto'
+            overflowX: 'auto',
+            pointerEvents: 'none'
           }}>
           {loader2 && <Loader />}
           {colsToRender.map((elem) => {

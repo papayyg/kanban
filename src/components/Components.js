@@ -26,11 +26,6 @@ const Components = ({
   useEffect(() => {
     const preloader = document.getElementById('preloader');
     if (!preloader) return;
-    // If columns loaded, show columns behind but keep overlay
-    if (columns) {
-      // keep overlay; nothing to change
-    }
-    // If board tasks loaded, hide preloader
     if (board && Array.isArray(board)) {
       preloader.style.opacity = '0';
       preloader.style.transition = 'opacity 0.3s ease';
@@ -77,6 +72,7 @@ const Components = ({
           filters={filters}
           board={board}
           list={list}
+          loader2={loader2}
           setData={setData}
           setDragEnter={setDragEnter}
           setDragOut={setDragOut}
