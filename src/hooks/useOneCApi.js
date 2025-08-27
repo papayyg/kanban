@@ -18,13 +18,13 @@ export const useOneCApi = (
 ) => {
     useEffect(() => {
         const methodNames = [
-            'setDataObject', 'setData', 'setMenu', 'setType', 'showManager', 'showResponsible',
+            'setFilterHeaders', 'setDataObject', 'setData', 'setMenu', 'setType', 'showManager', 'showResponsible',
             'setDate', 'setStartDate', 'setEndDate', 'setColumns', 'showFilters', 'setFilters',
             'setFilter', 'addFilters', 'setElem', 'setElemForStep', 'setListElem', 'getElem',
             'getPreviousStep', 'getNextStep', 'getElemInfo', 'setDragElemNull', 'setLoader',
             'setListLoader', 'setBoardLoader', 'setFilterLoader'
         ];
-        
+
         window.setDataObject = (string) => {
             const dataObject = safeJsonParse(string);
             if (dataObject) setData(dataObject);
@@ -42,6 +42,26 @@ export const useOneCApi = (
         document.setColumns = (array) => setData(prev => ({ ...prev, columns: safeJsonParse(array) }));
 
         // --- Управление фильтрами ---
+        document.setFilterHeaders = (filterHeaders) => {
+            const headers = safeJsonParse(filterHeaders);
+            if (headers && Array.isArray(headers)) {
+                setData(prev => ({
+                    ...prev,
+                    filters: {
+                        ...prev.filters,
+                        show: true,
+                        filterList: headers.map(header => ({
+                            id: header.id,
+                            title: header.title,
+                            options: [],
+                            selectedValue: null,
+                            selectedLabel: null,
+                            loader: false
+                        }))
+                    }
+                }));
+            }
+        };
         document.showFilters = (bool) => setData(prev => ({ ...prev, filters: { ...prev.filters, show: bool } }));
         document.setFilters = (id, array) => setData(prev => ({ ...prev, filters: { ...prev.filters, filterList: (prev.filters?.filterList || []).map(f => f.id === id ? { ...f, options: safeJsonParse(array) } : f) } }));
         document.setFilter = (value, label, id) => setData(prev => ({ ...prev, filters: { ...prev.filters, filterList: (prev.filters?.filterList || []).map(f => f.id === id ? { ...f, selectedValue: value, selectedLabel: label } : f) } }));
