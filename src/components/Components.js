@@ -35,8 +35,6 @@ const Components = ({
     }
   }, [columns, board]);
 
-  console.log(filters, "filters")
-
   return (
     <div>
       <Navigations

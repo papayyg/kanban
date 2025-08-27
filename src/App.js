@@ -52,6 +52,7 @@ function App() {
 
   useOneCApi(
     setData,
+    setDragEnter,
     () => dragEnter,
     () => dragOut
   );
