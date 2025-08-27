@@ -32,7 +32,7 @@ const Board = ({ columns, board, filters, setSelectedTask, loader2, setDragEnter
             height: titlesHeight,
             overflowY: 'hidden',
             overflowX: 'auto',
-            pointerEvents: 'none'
+            pointerEvents: loader2 ? 'none' : 'auto'
           }}>
           {loader2 && <Loader />}
           {colsToRender.map((elem) => {
