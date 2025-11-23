@@ -17,7 +17,7 @@ const Navigations = (menu) => {
       menu.setNavLoaded?.(true);
     }
   }, [menu, menu.setNavLoaded]);
-
+  
   return (
     <form className='nav-form flex j-between a-center' action=''>
       <div className='nav-form_left flex a-center w-100'>

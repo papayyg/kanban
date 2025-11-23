@@ -16,7 +16,10 @@ export const HoverSubmenuItem = ({ item, isActive, onMouseEnter, onItemClick }) 
                             key={submenuItem.value}
                             id={submenuItem.value}
                             className="submenuItem default_btn flex j-between a-center"
-                            onClick={() => onItemClick(item.value, submenuItem.value)}
+                            onClick={(e) => {
+                                e.preventDefault();
+                                onItemClick(item.value, submenuItem.value);
+                            }}
                         >
                             <p>{submenuItem.label}</p>
                             {submenuItem.checked && <span className="checked_span"></span>}

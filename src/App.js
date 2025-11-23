@@ -50,11 +50,14 @@ function App() {
   const [dragOut, setDragOut] = useState(null);
   const [selectedType, setSelectedType] = useState("Kanban");
 
+  const getDragEnterCallback = useCallback(() => dragEnter, [dragEnter]);
+  const getDragOutCallback = useCallback(() => dragOut, [dragOut]);
+
   useOneCApi(
     setData,
     setDragEnter,
-    () => dragEnter,
-    () => dragOut
+    getDragEnterCallback,
+    getDragOutCallback
   );
 
 

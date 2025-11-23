@@ -450,7 +450,7 @@
     "board": [
         {
             "id": "stage_id_1be1ace7-2462-11ec-84c8-0025903468f4",
-            "title": "Новый лид",
+            "title": "Претензия в рамках гарантийного обслуживания",
             "borderColor": "#FF0000",
             "dealAmount": 579,
             "costAmount": 36899820,
@@ -1104,7 +1104,7 @@
         },
         {
             "id": "stage_id_087c21bc-7b8e-11e9-83a8-1cb72cafa0f8",
-            "title": "Квалификация лида",
+            "title": "Претензия на рассмотрении у подрядчика",
             "borderColor": "#E9967A",
             "dealAmount": 317,
             "costAmount": 0,
@@ -1778,7 +1778,7 @@
         },
         {
             "id": "stage_id_087c21b8-7b8e-11e9-83a8-1cb72cafa0f8",
-            "title": "Назначена встреча",
+            "title": "Направлен ответ и назначена дата устранения замеча",
             "borderColor": "#66CDAA",
             "dealAmount": 7,
             "costAmount": 0,

@@ -52,7 +52,7 @@ const List = ({ menu, filters, board, list, setData, showFiltersBtn, loader2 }) 
           height: titlesHeight,
           overflowY: 'hidden',
           overflowX: 'auto',
-          pointerEvents: 'none'
+          pointerEvents: loader2 ? 'none' : 'auto'
         }}>
           <thead className='list_titles'>
             <tr>
